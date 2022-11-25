@@ -9,8 +9,9 @@ function Navbar() {
           <h1>Pokemon League Tracker</h1>
         </NavLink>
         <NavLink to="/register_pokemon">Register Pokemon</NavLink>
-        <h2>Add League</h2>
+        <NavLink to="/book_league">Book League</NavLink>
         <NavLink to="/all_pokemons">All Pokemons</NavLink>
+        <NavLink to="/all_leagues">All Leagues</NavLink>
       </div>
       <Outlet />
     </>
