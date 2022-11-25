@@ -1,8 +1,14 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 const mysql = require("mysql2");
+const bodyParser = require("body-parser");
+
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const db = mysql.createConnection({
   host: process.env.HOST,
@@ -43,17 +49,26 @@ app.get("/", (req, res) => {
   res.send("Pokemon table is created ...");
 });
 
-app.get("/createpokemon", (req, res) => {
-  let pokemon = `('Pikachu', 'lightning', 10, 15, 5)`;
-  let sql = `INSERT INTO pokemon (name, type, attack, defense, speed) VALUES ${pokemon}`;
-  db.query(sql, pokemon, (err, result) => {
-    if (err) {
-      throw err;
-    }
+app.get("/api/my_pokemons", (req, res) => {
+  let sql = "SELECT * FROM pokemon";
+  db.query(sql, (err, result) => {
+    res.send(result);
+  });
+  console.log("Show all pokemons ...");
+});
+
+app.post("/api/createpokemon", (req, res) => {
+  let { name, type, attack, defense, speed } = req.body;
+  let sql =
+    "INSERT INTO pokemon (name, type, attack, defense, speed) VALUES (?, ?, ?, ?, ?)";
+  db.query(sql, [name, type, attack, defense, speed], (result) => {
+    // if (err) {
+    //   throw err;
+    // }
     console.log(result);
     console.log("1 pokemon recorded");
   });
-  res.send("1 pokemon recorded");
+  res.send({ message: "1 pokemon recorded" });
 });
 
 app.listen(process.env.PORT || 5000, () => {
