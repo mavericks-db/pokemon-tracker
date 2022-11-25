@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-// import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 import '../stylesheets/allpokemons.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { nanoid } from 'nanoid';
 
 function AllPokemons() {
   const [arr, setArr] = useState([]);

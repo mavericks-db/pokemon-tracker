@@ -52,6 +52,15 @@ db.connect((err) => {
     console.log(result);
     console.log("League Table created ...");
   });
+  let sql3 =
+    "CREATE TABLE IF NOT EXISTS league_pokemon (lgid INT NOT NULL, FOREIGN KEY (lgid) REFERENCES league(id) ON DELETE CASCADE, pokemon VARCHAR(255) NOT NULL)";
+  db.query(sql3, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log(result);
+    console.log("League_Pokemon Join Table created ...");
+  });
 });
 
 app.get("/", (req, res) => {

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { nanoid } from "nanoid";
-import "../stylesheets/allpokemons.scss";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { nanoid } from 'nanoid';
+import '../stylesheets/allpokemons.scss';
+import { Link, useNavigate } from 'react-router-dom';
 
 function AllLeagues() {
   const [arr, setArr] = useState([]);
-  const apiURL = "http://localhost:5000/api/my_leagues";
-  const delUrl = "http://localhost:5000/api/deleteleague";
+  const apiURL = 'http://localhost:5000/api/my_leagues';
+  const delUrl = 'http://localhost:5000/api/deleteleague';
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,15 +22,15 @@ function AllLeagues() {
   const removeLeague = async (data) => {
     // console.log(data);
     const response = await fetch(delUrl, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
     const responsedata = await response.json();
     console.log(responsedata);
-    navigate("/");
+    navigate('/');
   };
 
   return (
