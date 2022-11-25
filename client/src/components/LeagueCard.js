@@ -13,7 +13,7 @@ function LeagueCard() {
   const apiURL = 'http://localhost:5000/api/my_pokemons';
 
   const [arr, setArr] = useState();
-  const checkSelection = [];
+  let checkSelection = [];
 
   useEffect(() => {
     async function fetchData() {
@@ -23,6 +23,8 @@ function LeagueCard() {
       console.log(data);
     }
     fetchData();
+    const saveBtn = document.querySelector('#save');
+    saveBtn.setAttribute('disabled', '');
   }, []);
 
   const clickHandler = (num) => {
@@ -33,9 +35,10 @@ function LeagueCard() {
     let output1 = slot1.value;
     let output2 = slot2.value;
     const errorMsg = document.querySelector('#error_msg');
-    const btnAll = document.querySelectorAll('button');
+    const btnAll = document.querySelectorAll('.confirm');
 
     const reset = () => {
+      checkSelection = [];
       btnAll.forEach((button) => {
         button.removeAttribute('disabled');
       });
@@ -46,13 +49,15 @@ function LeagueCard() {
 
     if (output1 !== 0 && output2 === '0') {
       output2 = 'solo';
-      checkSelection.push(1);
+      checkSelection.push(output1);
+      console.log(checkSelection);
     }
     if (output2 !== 0 && output1 === '0') {
       output1 = 'solo';
-      checkSelection.push(1);
+      checkSelection.push(output2);
+      console.log(checkSelection);
     }
-    if (checkSelection.length > 1) {
+    if (checkSelection.length !== new Set(checkSelection).size) {
       errorMsg.textContent = 'A pokemon can only fight solo once. Please choose again.';
       reset();
     }
@@ -134,8 +139,8 @@ function LeagueCard() {
           )}
         </tbody>
       </table>
-      <button type="button" onClick={() => clickHandler()}>
-        Proceed
+      <button type="button" id="save">
+        Save
       </button>
       <h2 id="error_msg"> </h2>
     </>
