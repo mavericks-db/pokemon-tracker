@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import "../stylesheets/pokemon.scss";
+import { Link, Navigate } from "react-router-dom";
 
 function Pokemon() {
   const { register, handleSubmit } = useForm();
@@ -22,6 +23,7 @@ function Pokemon() {
           }
           fetchData();
           console.log(data);
+          <Navigate to="/all_pokemons" />;
         })}
         className="form-container"
       >
@@ -59,6 +61,7 @@ function Pokemon() {
         />
         <input type="submit" />
       </form>
+      <Link to="/">Back to Home</Link>
     </>
   );
 }
