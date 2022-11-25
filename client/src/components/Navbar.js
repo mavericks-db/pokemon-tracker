@@ -1,5 +1,5 @@
-import "../stylesheets/navbar.scss";
-import { NavLink, Outlet } from "react-router-dom";
+import '../stylesheets/navbar.scss';
+import { NavLink, Outlet } from 'react-router-dom';
 
 function Navbar() {
   return (

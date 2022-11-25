@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { nanoid } from "nanoid";
-import "../stylesheets/allpokemons.scss";
+import { useEffect, useState } from 'react';
+// import { nanoid } from 'nanoid';
+import '../stylesheets/allpokemons.scss';
 
 function AllPokemons() {
   const [arr, setArr] = useState([]);
-  const apiURL = "http://localhost:5000/api/my_pokemons";
+  const apiURL = 'http://localhost:5000/api/my_pokemons';
 
   useEffect(() => {
     async function fetchData() {
