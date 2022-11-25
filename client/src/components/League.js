@@ -1,10 +1,10 @@
-import { useForm } from "react-hook-form";
-import "../stylesheets/pokemon.scss";
-import { Link, Navigate } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+import '../stylesheets/pokemon.scss';
+import { Link, Navigate } from 'react-router-dom';
 
 function League() {
   const { register, handleSubmit } = useForm();
-  const apiURL = "http://localhost:5000/api/bookleague";
+  const apiURL = 'http://localhost:5000/api/bookleague';
 
   return (
     <>
@@ -13,9 +13,9 @@ function League() {
         onSubmit={handleSubmit((data) => {
           async function fetchData() {
             const response = await fetch(apiURL, {
-              method: "POST",
+              method: 'POST',
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
               },
               body: JSON.stringify(data),
             });
@@ -24,7 +24,7 @@ function League() {
           }
           fetchData();
           console.log(data);
-          <Navigate to="/all_leagues" />;
+            <Navigate to="/all_leagues" />;
         })}
         className="form-container"
       >
@@ -32,7 +32,7 @@ function League() {
         <label htmlFor="title">
           Title:
           <input
-            {...register("title", { required: true })}
+            {...register('title', { required: true })}
             placeholder="Title"
             id="title"
           />
@@ -40,7 +40,7 @@ function League() {
         <label htmlFor="type">
           Location:
           <input
-            {...register("location", { required: true })}
+            {...register('location', { required: true })}
             placeholder="Location"
             id="location"
           />
@@ -48,7 +48,7 @@ function League() {
         <label htmlFor="terrain">
           Terrain:
           <input
-            {...register("terrain", { required: true })}
+            {...register('terrain', { required: true })}
             placeholder="Terrain"
             id="terrain"
           />
@@ -56,7 +56,7 @@ function League() {
         <label htmlFor="date">
           Date:
           <input
-            {...register("date", { required: true })}
+            {...register('date', { required: true })}
             placeholder="Date"
             id="date"
             type="date"
@@ -65,7 +65,7 @@ function League() {
         <label htmlFor="slots">
           No. of slots:
           <input
-            {...register("slots", { required: true })}
+            {...register('slots', { required: true })}
             placeholder="Slots"
             id="slots"
             type="number"
@@ -74,7 +74,7 @@ function League() {
         <label htmlFor="maxstats">
           Max limit of total stats:
           <input
-            {...register("maxstats", { required: true })}
+            {...register('maxstats', { required: true })}
             placeholder="Max Limit"
             id="maxstats"
             type="number"

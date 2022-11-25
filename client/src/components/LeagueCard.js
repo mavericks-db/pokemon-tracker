@@ -1,9 +1,10 @@
-import { useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 function LeagueCard() {
   const location = useLocation();
-  const { title, leaguelocation, terrain, date, slots, maxstats } =
-    location.state;
+  const {
+    title, leaguelocation, terrain, date, slots, maxstats,
+  } = location.state;
   const reqslots = slots;
 
   return (

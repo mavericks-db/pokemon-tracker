@@ -71,14 +71,28 @@ app.post("/api/createpokemon", (req, res) => {
   let { name, type, attack, defense, speed } = req.body;
   let sql =
     "INSERT INTO pokemon (name, type, attack, defense, speed) VALUES (?, ?, ?, ?, ?)";
-  db.query(sql, [name, type, attack, defense, speed], (result) => {
-    // if (err) {
-    //   throw err;
-    // }
+  db.query(sql, [name, type, attack, defense, speed], (err, result) => {
+    if (err) {
+      throw err;
+    }
     console.log(result);
     console.log("1 pokemon recorded");
   });
   res.send({ message: "1 pokemon recorded" });
+});
+
+app.post("/api/removepokemon", (req, res) => {
+  let { id } = req.body;
+  console.log(id);
+  let sql = "DELETE FROM pokemon WHERE id = ?";
+  db.query(sql, id, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log(result);
+    console.log("1 pokemon removed");
+  });
+  res.send({ message: "1 pokemon removed" });
 });
 
 // Routes for league
@@ -109,6 +123,20 @@ app.post("/api/bookleague", (req, res) => {
     }
   );
   res.send({ message: "1 pokemon league booked" });
+});
+
+app.post("/api/deleteleague", (req, res) => {
+  let { id } = req.body;
+  console.log(id);
+  let sql = "DELETE FROM league WHERE id = ?";
+  db.query(sql, id, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log(result);
+    console.log("1 pokemon league deleted");
+  });
+  res.send({ message: "1 pokemon league deleted" });
 });
 
 app.listen(process.env.PORT || 5000, () => {

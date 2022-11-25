@@ -1,10 +1,12 @@
 import { useForm } from 'react-hook-form';
 import '../stylesheets/pokemon.scss';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Pokemon() {
   const { register, handleSubmit } = useForm();
   const apiURL = 'http://localhost:5000/api/createpokemon';
+  const navigate = useNavigate();
+
   return (
     <>
       <h1>Please register your pokemon</h1>
@@ -23,7 +25,7 @@ function Pokemon() {
           }
           fetchData();
           console.log(data);
-            <Navigate to="/all_pokemons" />;
+          navigate('/all_pokemons');
         })}
         className="form-container"
       >
