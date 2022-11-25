@@ -41,14 +41,24 @@ db.connect((err) => {
       throw err;
     }
     console.log(result);
-    console.log("Table created ....");
+    console.log("Pokemon Table created ....");
+  });
+  let sql2 =
+    "CREATE TABLE IF NOT EXISTS league (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, title VARCHAR(255) NOT NULL, location VARCHAR(255) NOT NULL, terrain VARCHAR(255) NOT NULL, date DATETIME NOT NULL, slots INT NOT NULL, maxstats INT NOT NULL)";
+  db.query(sql2, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log(result);
+    console.log("League Table created ...");
   });
 });
 
 app.get("/", (req, res) => {
-  res.send("Pokemon table is created ...");
+  res.send("Pokemon and League tables are created ...");
 });
 
+// Routes for pokemon
 app.get("/api/my_pokemons", (req, res) => {
   let sql = "SELECT * FROM pokemon";
   db.query(sql, (err, result) => {
@@ -69,6 +79,36 @@ app.post("/api/createpokemon", (req, res) => {
     console.log("1 pokemon recorded");
   });
   res.send({ message: "1 pokemon recorded" });
+});
+
+// Routes for league
+app.get("/api/my_leagues", (req, res) => {
+  let sql = "SELECT * FROM league";
+  db.query(sql, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    res.send(result);
+  });
+  console.log("Show all pokemon leagues ...");
+});
+
+app.post("/api/bookleague", (req, res) => {
+  let { title, location, terrain, date, slots, maxstats } = req.body;
+  let sql =
+    "INSERT INTO league (title, location, terrain, date, slots, maxstats) VALUES (?, ?, ?, ?, ? , ?)";
+  db.query(
+    sql,
+    [title, location, terrain, date, slots, maxstats],
+    (err, result) => {
+      if (err) {
+        throw err;
+      }
+      console.log(result);
+      console.log("1 pokemon league booked");
+    }
+  );
+  res.send({ message: "1 pokemon league booked" });
 });
 
 app.listen(process.env.PORT || 5000, () => {

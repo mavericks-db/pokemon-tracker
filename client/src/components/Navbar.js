@@ -5,7 +5,9 @@ function Navbar() {
   return (
     <>
       <div className="navbar">
-        <h1>Pokemon League Tracker</h1>
+        <NavLink to="/">
+          <h1>Pokemon League Tracker</h1>
+        </NavLink>
         <NavLink to="/register_pokemon">Register Pokemon</NavLink>
         <h2>Add League</h2>
         <NavLink to="/all_pokemons">All Pokemons</NavLink>

@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 // import { nanoid } from 'nanoid';
-import '../stylesheets/allpokemons.scss';
+import "../stylesheets/allpokemons.scss";
+import { Link } from "react-router-dom";
 
 function AllPokemons() {
   const [arr, setArr] = useState([]);
-  const apiURL = 'http://localhost:5000/api/my_pokemons';
+  const apiURL = "http://localhost:5000/api/my_pokemons";
 
   useEffect(() => {
     async function fetchData() {
@@ -23,15 +24,19 @@ function AllPokemons() {
         <>
           <table className="list-table">
             <tr>
-              <th>ID</th>
+              <th>No.</th>
               <th>Pokemon</th>
             </tr>
             {arr.length > 0 ? (
               arr.map((pokemon, idx) => (
                 <>
                   <tr>
-                    <td>{idx}</td>
-                    <td>{pokemon.name}</td>
+                    <td>{idx + 1}</td>
+                    <td>
+                      <Link to={`/details/${pokemon.name}`} state={pokemon}>
+                        {pokemon.name}
+                      </Link>
+                    </td>
                   </tr>
                 </>
               ))
@@ -41,6 +46,7 @@ function AllPokemons() {
           </table>
         </>
       </div>
+      <Link to="/">Back to Home</Link>
     </>
   );
 }
