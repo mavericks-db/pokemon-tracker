@@ -19,15 +19,13 @@ function AllLeagues() {
   }, []);
 
   const removeLeague = async (data) => {
-    const response = await fetch(delURL, {
+    await fetch(delURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
-    const responsedata = await response.json();
-    console.log(responsedata);
     navigate('/');
   };
 

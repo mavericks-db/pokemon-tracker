@@ -13,18 +13,15 @@ function Pokemon() {
       <form
         onSubmit={handleSubmit((data) => {
           async function fetchData() {
-            const response = await fetch(apiURL, {
+            await fetch(apiURL, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify(data),
             });
-            const responsedata = await response.json();
-            console.log(responsedata);
           }
           fetchData();
-          console.log(data);
           navigate('/all_pokemons');
         })}
         className="form-container"

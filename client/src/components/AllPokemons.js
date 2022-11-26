@@ -13,23 +13,19 @@ function AllPokemons() {
     async function fetchData() {
       const response = await fetch(apiURL);
       const data = await response.json();
-      console.log(data);
       setArr(data);
     }
     fetchData();
   }, []);
 
   const deletePokemon = async (data) => {
-    // console.log(data);
-    const response = await fetch(delUrl, {
+    await fetch(delUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
-    const responsedata = await response.json();
-    console.log(responsedata);
     navigate('/');
   };
 

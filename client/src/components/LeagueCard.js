@@ -6,7 +6,7 @@ function LeagueCard() {
   const location = useLocation();
   const navigate = useNavigate();
   const {
-    title, leaguelocation, terrain, date, slots, maxstats, jsonPokemon,
+    id, title, leaguelocation, terrain, date, slots, maxstats, jsonPokemon,
   } = location.state;
   const apiURL = 'http://localhost:5000/api/my_pokemons';
   const saveURL = 'http://localhost:5000/api/updateleague';
@@ -70,7 +70,7 @@ function LeagueCard() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ selectedPokemons }),
+        body: JSON.stringify({ selectedPokemons, id }),
       });
     }
     fetchData();
@@ -80,6 +80,7 @@ function LeagueCard() {
   return (
     <>
       <h1>This is a league card</h1>
+      <h3>{id}</h3>
       <h3>{title}</h3>
       <h5>{leaguelocation}</h5>
       <h5>{terrain}</h5>
@@ -102,11 +103,11 @@ function LeagueCard() {
                   <td>
                     {pokemon.map((slot, idx) => (
                       <h5 key={nanoid()}>
-                        {idx + 1 + ".)"}
+                        {`${idx + 1}.)`}
                         {' '}
 &nbsp;
                         {' '}
-                        {slot === 'solo' ? '' : slot}
+                        {slot === 'solo' ? '---' : slot}
                       </h5>
                     ))}
                   </td>
