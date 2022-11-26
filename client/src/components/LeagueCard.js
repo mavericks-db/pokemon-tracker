@@ -8,13 +8,9 @@ function LeagueCard() {
   const {
     title, leaguelocation, terrain, date, slots, maxstats, jsonPokemon,
   } = location.state;
-  const availslots = new Array(slots).fill('');
-  // console.log(availslots);
-  console.log(jsonPokemon);
-
   const apiURL = 'http://localhost:5000/api/my_pokemons';
   const saveURL = 'http://localhost:5000/api/updateleague';
-
+  const availslots = new Array(slots).fill('');
   const [arr, setArr] = useState();
   let checkSelection = [];
   const selectedPokemons = [];
@@ -26,8 +22,6 @@ function LeagueCard() {
       setArr(data);
     }
     fetchData();
-    // const saveBtn = document.querySelector('#save');
-    // saveBtn.setAttribute('disabled', '');
   }, []);
 
   const clickHandler = (num) => {
@@ -67,34 +61,20 @@ function LeagueCard() {
       reset();
     }
     selectedPokemons.push([output1, output2]);
-    console.log(selectedPokemons);
   };
-
-  // window.addEventListener('mouseover', () => {
-  //   const btnAll = document.querySelectorAll('.confirm');
-  //   if (btnAll.disabled) {
-  //     const saveBtn = document.querySelector('#save');
-  //     saveBtn.removeAttribute('disabled');
-  //     alert('test');
-  //   }
-  // });
 
   const saveHandler = () => {
     async function fetchData() {
-      const response = await fetch(saveURL, {
+      await fetch(saveURL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({selectedPokemons}),
+        body: JSON.stringify({ selectedPokemons }),
       });
-      const responsedata = await response.json();
-      console.log(responsedata);
     }
     fetchData();
-    console.log(JSON.stringify({selectedPokemons}));
-    // console.log(selectedPokemons);
-    // navigate('/all_leagues');
+    navigate('/all_leagues');
   };
 
   return (
@@ -106,15 +86,42 @@ function LeagueCard() {
       <h5>{date}</h5>
       <h5>{maxstats}</h5>
       <h5>{slots}</h5>
-      {jsonPokemon ? (
-        jsonPokemon.map((pokemon) => (
-          <React.Fragment key={nanoid()}>
-            <h5>{pokemon}</h5>
-          </React.Fragment>
-        ))
-      ) : (
-        <h5>No pokemon selected yet.</h5>
-      )}
+      <table>
+        <thead>
+          <tr>
+            <td>Slot #</td>
+            <td>Selected Pokemons</td>
+          </tr>
+        </thead>
+        <tbody>
+          {jsonPokemon ? (
+            jsonPokemon.map((pokemon, index) => (
+              <React.Fragment key={nanoid()}>
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>
+                    {pokemon.map((slot, idx) => (
+                      <h5 key={nanoid()}>
+                        {idx + 1 + ".)"}
+                        {' '}
+&nbsp;
+                        {' '}
+                        {slot === 'solo' ? '' : slot}
+                      </h5>
+                    ))}
+                  </td>
+                </tr>
+              </React.Fragment>
+            ))
+          ) : (
+            <tr>
+              <td>
+                <h5>No pokemon selected yet.</h5>
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
       <h2>Slot Details</h2>
       <table>
         <thead>

@@ -153,8 +153,8 @@ app.post("/api/updateleague", (req, res) => {
   let { selectedPokemons } = req.body;
   console.log(selectedPokemons);
   // console.log(typeof pokemons);
-  let sql = `UPDATE league set jsonPokemon = '${JSON.stringify(selectedPokemons)}' WHERE id = 1`;
-  db.query(sql, (err, result) => {
+  let sql = `UPDATE league set jsonPokemon = '${JSON.stringify(selectedPokemons)}' WHERE id = ?`;
+  db.query(sql, 1, (err, result) => {
     if(err) {
       throw err;
     }
