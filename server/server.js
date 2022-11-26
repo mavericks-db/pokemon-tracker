@@ -18,15 +18,15 @@ const db = mysql.createConnection({
 });
 
 // Create Database
-app.get('/createdb', (req, res) => {
+app.get("/createdb", (req, res) => {
   let sql = "CREATE DATABASE IF NOT EXISTS pokemon_tracker";
   db.query(sql, (err, result) => {
-    if(err) {
+    if (err) {
       throw err;
     }
-    console.log('Database created...');
-  })
-  res.send('Database created')
+    console.log("Database created...");
+  });
+  res.send("Database created");
 });
 
 db.connect((err) => {
@@ -71,9 +71,24 @@ app.get("/", (req, res) => {
 app.get("/api/my_pokemons", (req, res) => {
   let sql = "SELECT * FROM pokemon";
   db.query(sql, (err, result) => {
+    if (err) {
+      throw err;
+    }
     res.send(result);
   });
   console.log("Show all pokemons ...");
+});
+
+app.post("/api/selectpokemon", (req, res) => {
+  let { pokemon } = req.body;
+  let sql = "SELECT attack, defense, speed FROM pokemon WHERE name = ?";
+  db.query(sql, pokemon, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    res.send(result);
+  });
+  console.log("Show stats of selected pokemon ...");
 });
 
 app.post("/api/createpokemon", (req, res) => {
@@ -150,16 +165,18 @@ app.post("/api/deleteleague", (req, res) => {
 
 app.post("/api/updateleague", (req, res) => {
   let { selectedPokemons, id } = req.body;
-  let sql = `UPDATE league set jsonPokemon = '${JSON.stringify(selectedPokemons)}' WHERE id = ?`;
+  let sql = `UPDATE league set jsonPokemon = '${JSON.stringify(
+    selectedPokemons
+  )}' WHERE id = ?`;
   db.query(sql, id, (err, result) => {
-    if(err) {
+    if (err) {
       throw err;
     }
     console.log(result);
     console.log("1 pokemon league updated");
-  })
-  res.send({message: "1 pokemon league updated"})
-})
+  });
+  res.send({ message: "1 pokemon league updated" });
+});
 
 app.listen(process.env.PORT || 5000, () => {
   console.log(`Server started in https://127.0.0.1:${process.env.PORT}`);

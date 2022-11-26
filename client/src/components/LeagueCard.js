@@ -37,12 +37,19 @@ function LeagueCard() {
     btn.setAttribute('disabled', '');
     const slot1 = document.querySelector(`#slotA_${num}`);
     const slot2 = document.querySelector(`#slotB_${num}`);
+    slot1.setAttribute('disabled', '');
+    slot2.setAttribute('disabled', '');
     let output1 = slot1.value;
     let output2 = slot2.value;
     const errorMsg = document.querySelector('#error_msg');
     const btnAll = document.querySelectorAll('.confirm');
 
     const reset = () => {
+      const selectOptions = document.querySelectorAll('.selectQuery');
+      selectOptions.forEach((sel) => {
+        const el = sel;
+        el.removeAttribute('disabled');
+      });
       checkSelection = [];
       btnAll.forEach((button) => {
         button.removeAttribute('disabled');
@@ -219,6 +226,7 @@ function LeagueCard() {
                     <select
                       id={`slotA_${idx + 1}`}
                       onChange={(e) => statsHandler(e)}
+                      className="selectQuery"
                     >
                       <option value="0">&nbsp;</option>
                       {arr ? (
@@ -239,6 +247,7 @@ function LeagueCard() {
                     <select
                       id={`slotB_${idx + 1}`}
                       onChange={(e) => statsHandler(e)}
+                      className="selectQuery"
                     >
                       <option value="0">&nbsp;</option>
                       {arr ? (
