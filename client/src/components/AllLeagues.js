@@ -26,7 +26,7 @@ function AllLeagues() {
       },
       body: JSON.stringify(data),
     });
-    navigate('/');
+    navigate('/home');
   };
 
   return (
@@ -55,7 +55,7 @@ function AllLeagues() {
                       <td>{idx + 1}</td>
                       <td>
                         <Link
-                          to={`/league/details/${league.title}`}
+                          to={`/home/league/details/${league.title}`}
                           state={league}
                         >
                           {league.title}
@@ -86,7 +86,7 @@ function AllLeagues() {
           </table>
         </>
       </div>
-      <Link to="/">Back to Home</Link>
+      <Link to="/home">Back to Home</Link>
     </>
   );
 }

@@ -22,7 +22,7 @@ function League() {
             });
           }
           fetchData();
-          navigate('/all_leagues');
+          navigate('/home/all_leagues');
         })}
         className="form-container"
       >
@@ -85,7 +85,7 @@ function League() {
           Reset
         </button>
       </form>
-      <Link to="/">Back to Home</Link>
+      <Link to="/home">Back to Home</Link>
     </>
   );
 }

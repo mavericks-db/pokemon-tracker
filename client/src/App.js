@@ -7,19 +7,21 @@ import PokemonCard from './components/PokemonCard';
 import AllLeagues from './components/AllLeagues';
 import League from './components/League';
 import LeagueCard from './components/LeagueCard';
+import Welcome from './components/Welcome';
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route path="/register_pokemon" element={<Pokemon />} />
-            <Route path="/all_pokemons" element={<AllPokemons />} />
-            <Route path="/pokemon/details/:id" element={<PokemonCard />} />
-            <Route path="/book_league" element={<League />} />
-            <Route path="/all_leagues" element={<AllLeagues />} />
-            <Route path="/league/details/:leagueid" element={<LeagueCard />} />
+          <Route path="/" element={<Welcome />} />
+          <Route path="/home" element={<Home />}>
+            <Route path="/home/register_pokemon" element={<Pokemon />} />
+            <Route path="/home/all_pokemons" element={<AllPokemons />} />
+            <Route path="/home/pokemon/details/:id" element={<PokemonCard />} />
+            <Route path="/home/book_league" element={<League />} />
+            <Route path="/home/all_leagues" element={<AllLeagues />} />
+            <Route path="/home/league/details/:leagueid" element={<LeagueCard />} />
           </Route>
         </Routes>
       </BrowserRouter>

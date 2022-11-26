@@ -122,7 +122,7 @@ function LeagueCard() {
       });
     }
     fetchData();
-    navigate('/all_leagues');
+    navigate('/home/all_leagues');
     return null;
   };
 

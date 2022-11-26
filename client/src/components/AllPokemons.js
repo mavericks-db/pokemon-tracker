@@ -26,7 +26,7 @@ function AllPokemons() {
       },
       body: JSON.stringify(data),
     });
-    navigate('/');
+    navigate('/home');
   };
 
   return (
@@ -50,7 +50,7 @@ function AllPokemons() {
                       <td>{idx + 1}</td>
                       <td>
                         <Link
-                          to={`/pokemon/details/${pokemon.name}`}
+                          to={`/home/pokemon/details/${pokemon.name}`}
                           state={pokemon}
                         >
                           {pokemon.name}
@@ -76,7 +76,7 @@ function AllPokemons() {
           </table>
         </>
       </div>
-      <Link to="/">Back to Home</Link>
+      <Link to="/home">Back to Home</Link>
     </>
   );
 }

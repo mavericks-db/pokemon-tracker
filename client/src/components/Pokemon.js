@@ -22,7 +22,7 @@ function Pokemon() {
             });
           }
           fetchData();
-          navigate('/all_pokemons');
+          navigate('/home/all_pokemons');
         })}
         className="form-container"
       >
@@ -75,7 +75,7 @@ function Pokemon() {
           Reset
         </button>
       </form>
-      <Link to="/">Back to Home</Link>
+      <Link to="/home">Back to Home</Link>
     </>
   );
 }
