@@ -1,30 +1,33 @@
 import { nanoid } from 'nanoid';
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function LeagueCard() {
   const location = useLocation();
+  const navigate = useNavigate();
   const {
-    title, leaguelocation, terrain, date, slots, maxstats,
+    title, leaguelocation, terrain, date, slots, maxstats, jsonPokemon,
   } = location.state;
   const availslots = new Array(slots).fill('');
-  console.log(availslots);
+  // console.log(availslots);
+  console.log(jsonPokemon);
 
   const apiURL = 'http://localhost:5000/api/my_pokemons';
+  const saveURL = 'http://localhost:5000/api/updateleague';
 
   const [arr, setArr] = useState();
   let checkSelection = [];
+  const selectedPokemons = [];
 
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(apiURL);
       const data = await response.json();
       setArr(data);
-      console.log(data);
     }
     fetchData();
-    const saveBtn = document.querySelector('#save');
-    saveBtn.setAttribute('disabled', '');
+    // const saveBtn = document.querySelector('#save');
+    // saveBtn.setAttribute('disabled', '');
   }, []);
 
   const clickHandler = (num) => {
@@ -50,12 +53,10 @@ function LeagueCard() {
     if (output1 !== 0 && output2 === '0') {
       output2 = 'solo';
       checkSelection.push(output1);
-      console.log(checkSelection);
     }
     if (output2 !== 0 && output1 === '0') {
       output1 = 'solo';
       checkSelection.push(output2);
-      console.log(checkSelection);
     }
     if (checkSelection.length !== new Set(checkSelection).size) {
       errorMsg.textContent = 'A pokemon can only fight solo once. Please choose again.';
@@ -65,7 +66,35 @@ function LeagueCard() {
       errorMsg.textContent = 'Duplicate pokemon. Please choose again.';
       reset();
     }
-    console.log(output1, output2);
+    selectedPokemons.push([output1, output2]);
+    console.log(selectedPokemons);
+  };
+
+  // window.addEventListener('mouseover', () => {
+  //   const btnAll = document.querySelectorAll('.confirm');
+  //   if (btnAll.disabled) {
+  //     const saveBtn = document.querySelector('#save');
+  //     saveBtn.removeAttribute('disabled');
+  //     alert('test');
+  //   }
+  // });
+
+  const saveHandler = () => {
+    async function fetchData() {
+      const response = await fetch(saveURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({selectedPokemons}),
+      });
+      const responsedata = await response.json();
+      console.log(responsedata);
+    }
+    fetchData();
+    console.log(JSON.stringify({selectedPokemons}));
+    // console.log(selectedPokemons);
+    // navigate('/all_leagues');
   };
 
   return (
@@ -77,6 +106,15 @@ function LeagueCard() {
       <h5>{date}</h5>
       <h5>{maxstats}</h5>
       <h5>{slots}</h5>
+      {jsonPokemon ? (
+        jsonPokemon.map((pokemon) => (
+          <React.Fragment key={nanoid()}>
+            <h5>{pokemon}</h5>
+          </React.Fragment>
+        ))
+      ) : (
+        <h5>No pokemon selected yet.</h5>
+      )}
       <h2>Slot Details</h2>
       <table>
         <thead>
@@ -95,7 +133,7 @@ function LeagueCard() {
                   <td key={nanoid()}>{idx + 1}</td>
                   <td>
                     <select id={`slotA_${idx + 1}`}>
-                      <option value="0">Select</option>
+                      <option value="0">&nbsp;</option>
                       {arr ? (
                         arr.map((pokemon) => (
                           <option value={pokemon.name} key={nanoid()}>
@@ -103,13 +141,13 @@ function LeagueCard() {
                           </option>
                         ))
                       ) : (
-                        <option value="0">NULL</option>
+                        <option value="0">&nbsp;</option>
                       )}
                     </select>
                   </td>
                   <td>
                     <select id={`slotB_${idx + 1}`}>
-                      <option value="0">Select</option>
+                      <option value="0">&nbsp;</option>
                       {arr ? (
                         arr.map((pokemon) => (
                           <option value={pokemon.name} key={nanoid()}>
@@ -117,7 +155,7 @@ function LeagueCard() {
                           </option>
                         ))
                       ) : (
-                        <option value="0">NULL</option>
+                        <option value="0">&nbsp;</option>
                       )}
                     </select>
                   </td>
@@ -139,7 +177,7 @@ function LeagueCard() {
           )}
         </tbody>
       </table>
-      <button type="button" id="save">
+      <button type="button" id="save" onClick={() => saveHandler()}>
         Save
       </button>
       <h2 id="error_msg"> </h2>

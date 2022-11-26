@@ -18,16 +18,16 @@ const db = mysql.createConnection({
 });
 
 // Create Database
-// app.get('/createdb', (req, res) => {
-//   let sql = "CREATE DATABASE IF NOT EXISTS pokemon_tracker";
-//   db.query(sql, (err, result) => {
-//     if(err) {
-//       throw err;
-//     }
-//     console.log('Database created...');
-//   })
-//   res.send('Database created')
-// });
+app.get('/createdb', (req, res) => {
+  let sql = "CREATE DATABASE IF NOT EXISTS pokemon_tracker";
+  db.query(sql, (err, result) => {
+    if(err) {
+      throw err;
+    }
+    console.log('Database created...');
+  })
+  res.send('Database created')
+});
 
 db.connect((err) => {
   if (err) {
@@ -44,7 +44,7 @@ db.connect((err) => {
     console.log("Pokemon Table created ....");
   });
   let sql2 =
-    "CREATE TABLE IF NOT EXISTS league (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, title VARCHAR(255) NOT NULL, location VARCHAR(255) NOT NULL, terrain VARCHAR(255) NOT NULL, date DATE NOT NULL, slots INT NOT NULL, maxstats INT NOT NULL)";
+    "CREATE TABLE IF NOT EXISTS league (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, title VARCHAR(255) NOT NULL, location VARCHAR(255) NOT NULL, terrain VARCHAR(255) NOT NULL, date DATE NOT NULL, slots INT NOT NULL, maxstats INT NOT NULL, jsonPokemon JSON DEFAULT NULL)";
   db.query(sql2, (err, result) => {
     if (err) {
       throw err;
@@ -52,15 +52,15 @@ db.connect((err) => {
     console.log(result);
     console.log("League Table created ...");
   });
-  let sql3 =
-    "CREATE TABLE IF NOT EXISTS league_pokemon (lgid INT NOT NULL, FOREIGN KEY (lgid) REFERENCES league(id) ON DELETE CASCADE, pokemon VARCHAR(255) NOT NULL)";
-  db.query(sql3, (err, result) => {
-    if (err) {
-      throw err;
-    }
-    console.log(result);
-    console.log("League_Pokemon Join Table created ...");
-  });
+  // let sql3 =
+  //   "CREATE TABLE IF NOT EXISTS league_pokemon (lgid INT NOT NULL, FOREIGN KEY (lgid) REFERENCES league(id) ON DELETE CASCADE, pokemon VARCHAR(255) NOT NULL)";
+  // db.query(sql3, (err, result) => {
+  //   if (err) {
+  //     throw err;
+  //   }
+  //   console.log(result);
+  //   console.log("League_Pokemon Join Table created ...");
+  // });
 });
 
 app.get("/", (req, res) => {
@@ -147,6 +147,22 @@ app.post("/api/deleteleague", (req, res) => {
   });
   res.send({ message: "1 pokemon league deleted" });
 });
+
+app.post("/api/updateleague", (req, res) => {
+  // console.log(req.body);
+  let { selectedPokemons } = req.body;
+  console.log(selectedPokemons);
+  // console.log(typeof pokemons);
+  let sql = `UPDATE league set jsonPokemon = '${JSON.stringify(selectedPokemons)}' WHERE id = 1`;
+  db.query(sql, (err, result) => {
+    if(err) {
+      throw err;
+    }
+    console.log(result);
+    console.log("1 pokemon league updated");
+  })
+  res.send({message: "1 pokemon league updated"})
+})
 
 app.listen(process.env.PORT || 5000, () => {
   console.log(`Server started in https://127.0.0.1:${process.env.PORT}`);

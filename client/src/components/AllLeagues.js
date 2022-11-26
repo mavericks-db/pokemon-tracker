@@ -6,22 +6,20 @@ import { Link, useNavigate } from 'react-router-dom';
 function AllLeagues() {
   const [arr, setArr] = useState([]);
   const apiURL = 'http://localhost:5000/api/my_leagues';
-  const delUrl = 'http://localhost:5000/api/deleteleague';
+  const delURL = 'http://localhost:5000/api/deleteleague';
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(apiURL);
       const data = await response.json();
-      console.log(data);
       setArr(data);
     }
     fetchData();
   }, []);
 
   const removeLeague = async (data) => {
-    // console.log(data);
-    const response = await fetch(delUrl, {
+    const response = await fetch(delURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -83,7 +81,7 @@ function AllLeagues() {
                 ))
               ) : (
                 <tr>
-                  <td>Loading ...</td>
+                  <td>No booked leagues to show.</td>
                 </tr>
               )}
             </tbody>

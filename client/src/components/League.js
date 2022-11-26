@@ -1,10 +1,11 @@
 import { useForm } from 'react-hook-form';
 import '../stylesheets/pokemon.scss';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function League() {
   const { register, handleSubmit } = useForm();
   const apiURL = 'http://localhost:5000/api/bookleague';
+  const navigate = useNavigate();
 
   return (
     <>
@@ -24,7 +25,7 @@ function League() {
           }
           fetchData();
           console.log(data);
-            <Navigate to="/all_leagues" />;
+          navigate('/all_leagues');
         })}
         className="form-container"
       >
