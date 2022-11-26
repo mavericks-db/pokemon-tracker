@@ -87,21 +87,26 @@ function LeagueCard() {
     const total = totalArr.reduce((a, b) => a + b);
     const errorMsg = document.querySelector('#error_msg');
     if (total > maxstats) {
-      errorMsg.textContent = 'The sum of the total stats of all slots should not exceed the total maximum stats allowed for the league. Please choose again. Reloading in 3 seconds.';
-      // const btnAll = document.querySelectorAll('.confirm');
-      // checkSelection = [];
-      // Array.from(spanAll).forEach((i) => {
-      //   const el = i;
-      //   console.log(i.textContent);
-      //   el.textContent = 0;
-      // });
-      // btnAll.forEach((button) => {
-      //   button.removeAttribute('disabled');
-      // });
+      errorMsg.textContent = 'The sum of the total stats of all slots should not exceed the total maximum stats allowed for the league. Please choose again.';
+      const selectOptions = document.querySelectorAll('.selectQuery');
+      selectOptions.forEach((sel) => {
+        const el = sel;
+        el.removeAttribute('disabled');
+        el.value = 0;
+      });
+
+      const btnAll = document.querySelectorAll('.confirm');
+      checkSelection = [];
+      Array.from(spanAll).forEach((i) => {
+        const el = i;
+        el.textContent = 0;
+      });
+      btnAll.forEach((button) => {
+        button.removeAttribute('disabled');
+      });
 
       setTimeout(() => {
         errorMsg.textContent = ' ';
-        window.location.reload();
       }, 3000);
 
       return null;
@@ -285,6 +290,10 @@ function LeagueCard() {
       <button type="button" id="save" onClick={() => saveHandler()}>
         Save
       </button>
+      <button type="button" id="reset" onClick={() => window.location.reload()}>
+        Reset
+      </button>
+
       <h2 id="error_msg"> </h2>
     </>
   );

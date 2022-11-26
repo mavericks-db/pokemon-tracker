@@ -78,8 +78,12 @@ function League() {
             type="number"
           />
         </label>
-
-        <input type="submit" />
+        <button type="submit">
+          Submit
+        </button>
+        <button type="button" id="reset" onClick={() => window.location.reload()}>
+          Reset
+        </button>
       </form>
       <Link to="/">Back to Home</Link>
     </>
