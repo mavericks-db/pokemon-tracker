@@ -124,15 +124,16 @@ function Pokemon() {
                 disabled
               />
             </label>
-
-            <button type="submit">Submit</button>
-            <button
-              type="button"
-              id="reset"
-              onClick={() => window.location.reload()}
-            >
-              Reset
-            </button>
+            <div>
+              <button type="submit">Submit</button>
+              <button
+                type="button"
+                id="reset"
+                onClick={() => window.location.reload()}
+              >
+                Reset
+              </button>
+            </div>
           </form>
           <div>
             <img src={PokemonTypes} alt="PokemonTypes" />
