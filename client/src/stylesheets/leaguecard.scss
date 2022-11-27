@@ -1,0 +1,39 @@
+.league-wrapper-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 1rem;
+}
+
+.league-details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+  width: 50vw;
+}
+
+.slot-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  width: 50vw;
+}
+
+#error_msg {
+  color: red;
+  font-style: italic;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.buttons-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 1rem;
+}
+

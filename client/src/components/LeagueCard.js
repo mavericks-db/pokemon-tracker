@@ -1,27 +1,28 @@
 import { nanoid } from 'nanoid';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import '../stylesheets/leaguecard.scss';
 
 function LeagueCard() {
-  const location = useLocation();
+  const ulocation = useLocation();
   const navigate = useNavigate();
   const {
     id,
     title,
-    leaguelocation,
+    location,
     terrain,
     date,
     slots,
     maxstats,
     jsonPokemon,
-  } = location.state;
+  } = ulocation.state;
   const apiURL = 'http://localhost:5000/api/my_pokemons';
   const saveURL = 'http://localhost:5000/api/updateleague';
   const statsURL = 'http://localhost:5000/api/selectpokemon';
   const availslots = new Array(slots).fill('');
   const [arr, setArr] = useState();
   let checkSelection = [];
-  const selectedPokemons = [];
+  let selectedPokemons = [];
 
   useEffect(() => {
     async function fetchData() {
@@ -35,81 +36,85 @@ function LeagueCard() {
   const clickHandler = (num) => {
     const btn = document.querySelector(`#confirmBtn${num}`);
     btn.setAttribute('disabled', '');
+    btn.textContent = 'Confirmed';
     const slot1 = document.querySelector(`#slotA_${num}`);
     const slot2 = document.querySelector(`#slotB_${num}`);
     slot1.setAttribute('disabled', '');
     slot2.setAttribute('disabled', '');
-    let output1 = slot1.value;
-    let output2 = slot2.value;
+    let outputA = slot1.value;
+    let outputB = slot2.value;
     const errorMsg = document.querySelector('#error_msg');
     const btnAll = document.querySelectorAll('.confirm');
 
-    const reset = () => {
-      const selectOptions = document.querySelectorAll('.selectQuery');
-      selectOptions.forEach((sel) => {
-        const el = sel;
-        el.removeAttribute('disabled');
-      });
-      checkSelection = [];
-      btnAll.forEach((button) => {
-        button.removeAttribute('disabled');
-      });
-      setTimeout(() => {
-        errorMsg.textContent = ' ';
-      }, 3000);
-    };
-
-    if (output1 !== 0 && output2 === '0') {
-      output2 = 'solo';
-      checkSelection.push(output1);
-    }
-    if (output2 !== 0 && output1 === '0') {
-      output1 = 'solo';
-      checkSelection.push(output2);
-    }
-    if (checkSelection.length !== new Set(checkSelection).size) {
-      errorMsg.textContent = 'A pokemon can only fight solo once. Please choose again.';
-      reset();
-    }
-    if (output1 === output2) {
-      errorMsg.textContent = 'Duplicate pokemon. Please choose again.';
-      reset();
-    }
-    selectedPokemons.push([output1, output2]);
-  };
-
-  const saveHandler = () => {
     const spanAll = document.getElementsByClassName('spanStats');
     const totalArr = [];
     Array.from(spanAll).forEach((el) => {
       totalArr.push(parseInt(el.innerText, 10));
     });
     const total = totalArr.reduce((a, b) => a + b);
-    const errorMsg = document.querySelector('#error_msg');
-    if (total > maxstats) {
-      errorMsg.textContent = 'The sum of the total stats of all slots should not exceed the total maximum stats allowed for the league. Please choose again.';
+    const currentTotal = document.querySelector('#currenttotal');
+    currentTotal.textContent = total;
+
+    const reset = () => {
+      checkSelection = [];
       const selectOptions = document.querySelectorAll('.selectQuery');
       selectOptions.forEach((sel) => {
         const el = sel;
+        el.value = '???';
         el.removeAttribute('disabled');
-        el.value = 0;
-      });
-
-      const btnAll = document.querySelectorAll('.confirm');
-      checkSelection = [];
-      Array.from(spanAll).forEach((i) => {
-        const el = i;
-        el.textContent = 0;
       });
       btnAll.forEach((button) => {
         button.removeAttribute('disabled');
+        const btn = button;
+        btn.textContent = 'Confirm';
       });
-
       setTimeout(() => {
         errorMsg.textContent = ' ';
-      }, 3000);
+        currentTotal.textContent = 0;
+        Array.from(spanAll).forEach((el) => {
+          const span = el;
+          span.innerText = 0;
+        });
+        selectedPokemons = [];
+      }, 2000);
+    };
 
+    if (outputA !== '???' && outputB === '???') {
+      outputB = 'solo';
+      checkSelection.push(outputA);
+    }
+    if (outputB !== '???' && outputA === '???') {
+      outputA = 'solo';
+      checkSelection.push(outputB);
+    }
+    if (checkSelection.length !== new Set(checkSelection).size) {
+      errorMsg.textContent = 'A pokémon can only fight solo once. Please choose again.';
+      reset();
+    }
+    if (outputA === outputB) {
+      errorMsg.textContent = 'Empty or duplicate pokémon on a slot are not allowed. Please choose again.';
+      reset();
+    }
+
+    if (total > maxstats) {
+      errorMsg.textContent = 'The sum of the total stats of all slots should not exceed the total maximum stats allowed for the league. Please choose again.';
+      reset();
+    }
+
+    selectedPokemons.push([outputA, outputB]);
+  };
+
+  const saveHandler = () => {
+    const btnAll = document.querySelectorAll('.confirm');
+    btnAll.forEach((button) => {
+      if (button.disabled === false) {
+        return false;
+      }
       return null;
+    });
+
+    if (!selectedPokemons.length) {
+      return false;
     }
 
     async function fetchData() {
@@ -128,6 +133,10 @@ function LeagueCard() {
 
   const statsHandler = (e) => {
     const target1 = e.target.nextSibling.id;
+    const sibling = document.querySelector(`#${target1}`);
+    if (e.target.value === '???') {
+      sibling.textContent = 0;
+    }
     const obj = {
       pokemon: e.target.value,
     };
@@ -140,161 +149,194 @@ function LeagueCard() {
         body: JSON.stringify(obj),
       });
       const data = await response.json();
-      const sibling = document.querySelector(`#${target1}`);
       sibling.textContent = data[0].attack + data[0].defense + data[0].speed;
     }
     fetchData();
+    return null;
   };
 
   return (
     <>
-      <h1>This is a league card</h1>
-      <h3>
-        League ID:
-        {id}
-      </h3>
-      <h3>
-        Title:
-        {title}
-      </h3>
-      <h5>
-        Location:
-        {leaguelocation}
-      </h5>
-      <h5>
-        Terrain:
-        {terrain}
-      </h5>
-      <h5>
-        Date:
-        {date}
-      </h5>
-      <h5>
-        Total Maximum Stats:
-        {maxstats}
-      </h5>
-      <h5>
-        No. of required slots:
-        {slots}
-      </h5>
-      <table>
-        <thead>
-          <tr>
-            <td>Slot #</td>
-            <td>Selected Pokemons</td>
-          </tr>
-        </thead>
-        <tbody>
-          {jsonPokemon ? (
-            jsonPokemon.map((pokemon, index) => (
-              <React.Fragment key={nanoid()}>
+      <div className="league-wrapper-card">
+        <div className="league-details">
+          <div>
+            <h4>
+              League ID #:
+              &emsp;
+              {id}
+            </h4>
+            <h4>
+              Title:
+              &emsp;
+              {title.charAt(0).toUpperCase() + title.slice(1)}
+            </h4>
+            <h4>
+              Location:
+              &emsp;
+              {location.charAt(0).toUpperCase() + location.slice(1)}
+            </h4>
+            <h4>
+              Terrain:
+              &emsp;
+              {terrain.charAt(0).toUpperCase() + terrain.slice(1)}
+            </h4>
+            <h4>
+              Date:
+              &emsp;
+              {date.slice(0, 10)}
+            </h4>
+            <h4>
+              Max Limit of Total Stats:
+              &emsp;
+              {maxstats}
+            </h4>
+            <h3>
+              Required no. of slots:
+              &emsp;
+              {slots}
+            </h3>
+          </div>
+          <div>
+            <table>
+              <thead>
                 <tr>
-                  <td>{index + 1}</td>
-                  <td>
-                    {pokemon.map((slot, idx) => (
-                      <h5 key={nanoid()}>
-                        {`${idx + 1}.)`}
-                        {' '}
-                        {slot === 'solo' ? '---' : slot}
-                      </h5>
-                    ))}
-                  </td>
+                  <td>Slot #</td>
+                  <td>Selected Pokémons</td>
                 </tr>
-              </React.Fragment>
-            ))
-          ) : (
-            <tr>
-              <td>
-                <h5>No pokemon selected yet.</h5>
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-      <h2>Slot Details</h2>
-      <table>
-        <thead>
-          <tr>
-            <td>Slot #</td>
-            <td>Pokemon Slot 1</td>
-            <td>Pokemon Slot 2</td>
-            <td>Action</td>
-          </tr>
-        </thead>
-        <tbody>
-          {availslots.length ? (
-            availslots.map((slot, idx) => (
-              <React.Fragment key={nanoid()}>
-                <tr>
-                  <td key={nanoid()}>{idx + 1}</td>
-                  <td>
-                    <select
-                      id={`slotA_${idx + 1}`}
-                      onChange={(e) => statsHandler(e)}
-                      className="selectQuery"
-                    >
-                      <option value="0">&nbsp;</option>
-                      {arr ? (
-                        arr.map((pokemon) => (
-                          <option value={pokemon.name} key={nanoid()}>
-                            {pokemon.name}
-                          </option>
-                        ))
-                      ) : (
-                        <option value="0">&nbsp;</option>
-                      )}
-                    </select>
-                    <span id={`spanA_${idx + 1}`} className="spanStats">
-                      0
-                    </span>
-                  </td>
-                  <td>
-                    <select
-                      id={`slotB_${idx + 1}`}
-                      onChange={(e) => statsHandler(e)}
-                      className="selectQuery"
-                    >
-                      <option value="0">&nbsp;</option>
-                      {arr ? (
-                        arr.map((pokemon) => (
-                          <option value={pokemon.name} key={nanoid()}>
-                            {pokemon.name}
-                          </option>
-                        ))
-                      ) : (
-                        <option value="0">&nbsp;</option>
-                      )}
-                    </select>
-                    <span id={`spanB_${idx + 1}`} className="spanStats">
-                      0
-                    </span>
-                  </td>
-                  <td>
-                    <button
-                      type="button"
-                      id={`confirmBtn${idx + 1}`}
-                      onClick={() => clickHandler(idx + 1)}
-                      className="confirm"
-                    >
-                      Confirm
-                    </button>
-                  </td>
-                </tr>
-              </React.Fragment>
-            ))
-          ) : (
-            <td>Computing slots ... </td>
-          )}
-        </tbody>
-      </table>
-      <button type="button" id="save" onClick={() => saveHandler()}>
-        Save
-      </button>
-      <button type="button" id="reset" onClick={() => window.location.reload()}>
-        Reset
-      </button>
-
-      <h2 id="error_msg"> </h2>
+              </thead>
+              <tbody>
+                {jsonPokemon ? (
+                  jsonPokemon.map((pokemon, index) => (
+                    <React.Fragment key={nanoid()}>
+                      <tr>
+                        <td>{index + 1}</td>
+                        <td>
+                          {pokemon.map((slot) => (
+                            <h5 key={nanoid()}>
+                              {slot === 'solo' ? '---' : (slot.charAt(0).toUpperCase() + slot.slice(1))}
+                            </h5>
+                          ))}
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  ))
+                ) : (
+                  <tr>
+                    <td>
+                      <h5>No pokémon selected yet.</h5>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="slot-details">
+          <h4>Update Slot Details</h4>
+          <table>
+            <thead>
+              <tr>
+                <td>Slot #</td>
+                <td>Pokémon Slot A (Total Stats)</td>
+                <td>Pokémon Slot B (Total Stats)</td>
+                <td>Action</td>
+              </tr>
+            </thead>
+            <tbody>
+              {availslots.length ? (
+                availslots.map((slot, idx) => (
+                  <React.Fragment key={nanoid()}>
+                    <tr>
+                      <td key={nanoid()}>{idx + 1}</td>
+                      <td>
+                        <select
+                          id={`slotA_${idx + 1}`}
+                          onChange={(e) => statsHandler(e)}
+                          className="selectQuery"
+                        >
+                          <option value="???">???</option>
+                          {arr ? (
+                            arr.map((pokemon) => (
+                              <option
+                                value={pokemon.name.charAt(0).toUpperCase()
+                                + pokemon.name.slice(1)}
+                                key={nanoid()}
+                              >
+                                {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+                              </option>
+                            ))
+                          ) : (
+                            <option value="???">???</option>
+                          )}
+                        </select>
+                        <h4 id={`spanA_${idx + 1}`} className="spanStats">
+                          0
+                        </h4>
+                      </td>
+                      <td>
+                        <select
+                          id={`slotB_${idx + 1}`}
+                          onChange={(e) => statsHandler(e)}
+                          className="selectQuery"
+                        >
+                          <option value="???">???</option>
+                          {arr ? (
+                            arr.map((pokemon) => (
+                              <option
+                                value={pokemon.name.charAt(0).toUpperCase()
+                                + pokemon.name.slice(1)}
+                                key={nanoid()}
+                              >
+                                {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+                              </option>
+                            ))
+                          ) : (
+                            <option value="???">???</option>
+                          )}
+                        </select>
+                        <h4 id={`spanB_${idx + 1}`} className="spanStats">
+                          0
+                        </h4>
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          id={`confirmBtn${idx + 1}`}
+                          onClick={() => clickHandler(idx + 1)}
+                          className="confirm"
+                        >
+                          Confirm
+                        </button>
+                      </td>
+                    </tr>
+                  </React.Fragment>
+                ))
+              ) : (
+                <td>Computing slots ... </td>
+              )}
+            </tbody>
+          </table>
+          <div className="buttons-section">
+            <div>
+              <button type="button" id="save" onClick={(e) => saveHandler(e)}>
+                Save
+              </button>
+              <button
+                type="button"
+                id="reset"
+                onClick={() => window.location.reload()}
+              >
+                Reset
+              </button>
+            </div>
+            <h4>
+              Current Total Stats: &emsp;
+              <span id="currenttotal"> </span>
+            </h4>
+          </div>
+          <h2 id="error_msg"> </h2>
+        </div>
+      </div>
     </>
   );
 }

@@ -136,12 +136,19 @@ function League() {
           <div className="notes">
             <h4>
               <BsInfoCircle />
+              &nbsp;
               There are nine (9) known regional Leagues:
             </h4>
             <ul>
               {pokeleagues.map((ll) => (
                 <React.Fragment key={nanoid()}>
-                  <li>{ll.title}</li>
+                  <li>
+                    {ll.title}
+                    {' '}
+                    -
+                    {' '}
+                    {ll.location}
+                  </li>
                 </React.Fragment>
               ))}
             </ul>
