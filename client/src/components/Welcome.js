@@ -7,7 +7,7 @@ import '../stylesheets/animations.scss';
 function Welcome() {
   return (
     <div className="wrapper">
-      <img src={PokemonLogo} alt="PokemonLogo" className="scale-in-center" />
+      <img src={PokemonLogo} alt="PokemonLogo" className="scale-in-center" draggable="false" />
       <h1 className="text-focus-in">LEAGUE TRACKER</h1>
       <Link to="home" className="text-focus-in">
         START HERE &nbsp;

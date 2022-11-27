@@ -8,11 +8,17 @@
   position: sticky;
   z-index: 1;
   top: 0;
-  padding: 0.5rem;
+  padding: 0.5rem 2rem;
 }
 
-.navbar h1 {
+.navbar img {
   font-size: 1.5rem;
+  width: 3rem;
+  border-radius: 50%;
+  
+  &:hover {
+    border: 1px solid white;
+  }
 }
 
 .navbar a {
