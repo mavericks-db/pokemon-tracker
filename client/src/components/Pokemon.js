@@ -145,7 +145,7 @@ function Pokemon() {
           The total stats of the pokemon would be the sum of attack, defense,
           and speed.
         </h3>
-        <Link to="/home" className="home">
+        <Link to="/home" className="home-pokemon">
           <FaHome />
           Home
         </Link>

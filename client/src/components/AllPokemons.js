@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
 import '../stylesheets/allpokemons.scss';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaHome } from 'react-icons/fa';
 
 function AllPokemons() {
   const [arr, setArr] = useState([]);
@@ -76,7 +77,10 @@ function AllPokemons() {
           </table>
         </>
       </div>
-      <Link to="/home">Back to Home</Link>
+      <Link to="/home" className="home-allpokemons">
+        <FaHome />
+        Home
+      </Link>
     </>
   );
 }

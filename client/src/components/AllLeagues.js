@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
-import '../stylesheets/allpokemons.scss';
+import '../stylesheets/allleagues.scss';
 import { Link, useNavigate } from 'react-router-dom';
+import { FaHome } from 'react-icons/fa';
 
 function AllLeagues() {
   const [arr, setArr] = useState([]);
@@ -86,7 +87,10 @@ function AllLeagues() {
           </table>
         </>
       </div>
-      <Link to="/home">Back to Home</Link>
+      <Link to="/home" className="home-allleagues">
+        <FaHome />
+        Home
+      </Link>
     </>
   );
 }

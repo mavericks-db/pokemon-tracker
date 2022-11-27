@@ -147,7 +147,7 @@ function League() {
             </ul>
           </div>
         </div>
-        <Link to="/home" className="home">
+        <Link to="/home" className="home-league">
           <FaHome />
           Home
         </Link>
