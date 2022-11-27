@@ -20,7 +20,7 @@ function App() {
             <Route index element={<Intro />} />
             <Route path="/home/register_pokemon" element={<Pokemon />} />
             <Route path="/home/all_pokemons" element={<AllPokemons />} />
-            <Route path="/home/pokemon/details/:id" element={<PokemonCard />} />
+            <Route path="/home/all_pokemons/details/:id" element={<PokemonCard />} />
             <Route path="/home/book_league" element={<League />} />
             <Route path="/home/all_leagues" element={<AllLeagues />} />
             <Route

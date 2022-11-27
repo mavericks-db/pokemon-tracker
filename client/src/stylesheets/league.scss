@@ -25,11 +25,28 @@
   border-radius: 1rem;
   padding: 2rem;
 
- 
+  label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   input {
-    margin: 0.5rem;
+    margin: 1rem;
+    float: right;
+
+    &::placeholder {
+      padding: 0.25rem;
+      font-style: italic;
+    }
+  }
+
+  select {
+    float: right;
+    margin-right: 1rem;
   }
 }
+
 
 .form-container h2 {
   text-align: center;

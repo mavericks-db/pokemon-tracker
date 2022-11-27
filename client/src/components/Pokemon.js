@@ -44,7 +44,7 @@ function Pokemon() {
   return (
     <>
       <div className="pokemon-wrapper">
-        <h1>Please register your pokemon</h1>
+        <h2>Please register your pokémon</h2>
         <div className="form-wrapper">
           <form
             onSubmit={handleSubmit((data) => {
@@ -63,7 +63,8 @@ function Pokemon() {
             className="form-container"
           >
             <label htmlFor="name">
-              Pokemon Name:
+              Pokémon Name:
+              &emsp;
               <input
                 {...register('name', { required: true })}
                 placeholder="Name"
@@ -71,7 +72,8 @@ function Pokemon() {
               />
             </label>
             <label htmlFor="type">
-              Pokemon Type:
+              Pokémon Type:
+              &emsp;
               <select {...register('type', { required: true })} id="type">
                 <option value="???">???</option>
                 {typeArr.map((type) => (
@@ -84,6 +86,7 @@ function Pokemon() {
             </label>
             <label htmlFor="attack">
               Attack Points:
+              &emsp;
               <input
                 {...register('attack', { required: true })}
                 placeholder="Attack"
@@ -95,6 +98,7 @@ function Pokemon() {
             </label>
             <label htmlFor="defense">
               Defense Points:
+              &emsp;
               <input
                 {...register('defense', { required: true })}
                 placeholder="Defense"
@@ -106,6 +110,7 @@ function Pokemon() {
             </label>
             <label htmlFor="speed">
               Speed Points:
+              &emsp;
               <input
                 {...register('speed', { required: true })}
                 placeholder="Speed"
@@ -117,6 +122,7 @@ function Pokemon() {
             </label>
             <label htmlFor="stats">
               Total Points:
+              &emsp;
               <input
                 placeholder="calculating ..."
                 id="total"
@@ -140,9 +146,9 @@ function Pokemon() {
           </div>
         </div>
         <h3 className="info">
-          NOTE: For the pokemon to be eligible to participate in any league, it
+          NOTE: For the pokémon to be eligible to participate in any league, it
           is required to have the following stats - attack, defense, and speed.
-          The total stats of the pokemon would be the sum of attack, defense,
+          The total stats of the pokémon would be the sum of attack, defense,
           and speed.
         </h3>
         <Link to="/home" className="home-pokemon">

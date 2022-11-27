@@ -52,7 +52,7 @@ function League() {
   return (
     <>
       <div className="league-wrapper">
-        <h1>Please book a league</h1>
+        <h2>Please book a league</h2>
         <div className="form-wrapper">
           <form
             onSubmit={handleSubmit((data) => {

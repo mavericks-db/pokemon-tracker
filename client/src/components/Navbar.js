@@ -9,9 +9,9 @@ function Navbar() {
         <NavLink to="/">
           <img src={Pokeball} alt="Pokeball" className="rotate-center" />
         </NavLink>
-        <NavLink to="/home/register_pokemon">Register Pokemon</NavLink>
+        <NavLink to="/home/register_pokemon">Register Pokémon</NavLink>
         <NavLink to="/home/book_league">Book League</NavLink>
-        <NavLink to="/home/all_pokemons">Show Pokemons</NavLink>
+        <NavLink to="/home/all_pokemons">Show Pokémons</NavLink>
         <NavLink to="/home/all_leagues">Show Leagues</NavLink>
       </div>
       <Outlet />

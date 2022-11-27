@@ -52,15 +52,6 @@ db.connect((err) => {
     console.log(result);
     console.log("League Table created ...");
   });
-  // let sql3 =
-  //   "CREATE TABLE IF NOT EXISTS league_pokemon (lgid INT NOT NULL, FOREIGN KEY (lgid) REFERENCES league(id) ON DELETE CASCADE, pokemon VARCHAR(255) NOT NULL)";
-  // db.query(sql3, (err, result) => {
-  //   if (err) {
-  //     throw err;
-  //   }
-  //   console.log(result);
-  //   console.log("League_Pokemon Join Table created ...");
-  // });
 });
 
 app.get("/", (req, res) => {
@@ -96,9 +87,9 @@ app.post("/api/createpokemon", (req, res) => {
   let sql =
     "INSERT INTO pokemon (name, type, attack, defense, speed) VALUES (?, ?, ?, ?, ?)";
   db.query(sql, [name, type, attack, defense, speed], (err, result) => {
-    if (err) {
-      throw err;
-    }
+    // if (err) {
+    //   throw err;
+    // }
     console.log(result);
     console.log("1 pokemon recorded");
   });
@@ -139,9 +130,9 @@ app.post("/api/bookleague", (req, res) => {
     sql,
     [title, location, terrain, date, slots, maxstats],
     (err, result) => {
-      if (err) {
-        throw err;
-      }
+      // if (err) {
+      //   throw err;
+      // }
       console.log(result);
       console.log("1 pokemon league booked");
     }
@@ -169,9 +160,9 @@ app.post("/api/updateleague", (req, res) => {
     selectedPokemons
   )}' WHERE id = ?`;
   db.query(sql, id, (err, result) => {
-    if (err) {
-      throw err;
-    }
+    // if (err) {
+    //   throw err;
+    // }
     console.log(result);
     console.log("1 pokemon league updated");
   });

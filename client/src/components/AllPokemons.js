@@ -32,14 +32,15 @@ function AllPokemons() {
 
   return (
     <>
-      <div className="list-container">
-        <h1>All my pokemons</h1>
+      <div className="list-container-pokemon">
+        <h2>List of pokémons</h2>
         <>
           <table className="list-table">
             <thead>
               <tr>
                 <th>No.</th>
-                <th>Pokemon</th>
+                <th>Pokémon</th>
+                <th>Type</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -51,12 +52,13 @@ function AllPokemons() {
                       <td>{idx + 1}</td>
                       <td>
                         <Link
-                          to={`/home/pokemon/details/${pokemon.name}`}
+                          to={`/home/all_pokemons/details/${pokemon.name}`}
                           state={pokemon}
                         >
-                          {pokemon.name}
+                          {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
                         </Link>
                       </td>
+                      <td>{pokemon.type}</td>
                       <td>
                         <button
                           type="button"

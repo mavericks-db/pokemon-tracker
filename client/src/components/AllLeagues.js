@@ -33,7 +33,7 @@ function AllLeagues() {
   return (
     <>
       <div className="list-container">
-        <h1>All my leagues</h1>
+        <h2>Upcoming Pokémon Leagues</h2>
         <>
           <table className="list-table">
             <thead>
@@ -59,12 +59,12 @@ function AllLeagues() {
                           to={`/home/league/details/${league.title}`}
                           state={league}
                         >
-                          {league.title}
+                          {league.title.charAt(0).toUpperCase() + league.title.slice(1)}
                         </Link>
                       </td>
-                      <td>{league.location}</td>
-                      <td>{league.terrain}</td>
-                      <td>{league.date}</td>
+                      <td>{league.location.charAt(0).toUpperCase() + league.location.slice(1)}</td>
+                      <td>{league.terrain.charAt(0).toUpperCase() + league.terrain.slice(1)}</td>
+                      <td>{league.date.slice(0, 10)}</td>
                       <td>{league.slots}</td>
                       <td>{league.maxstats}</td>
                       <td>

@@ -5,21 +5,21 @@ function Intro() {
   return (
     <>
       <div className="home-wrapper">
-        <h2 className="">Welcome to the Pokemon League !</h2>
+        <h2 className="">Welcome to the Pokémon League !</h2>
         <img src={Ash} alt="Ash_team" draggable="false" />
         <div className="intro">
           <h3>
-            Hi Trainer! Congratulations on qualifying for the Pokemon League.
+            Hi Trainer! Congratulations on qualifying for the Pokémon League.
             <br />
             <br />
-            Before you need to continue, you need to register your pokemon and
+            Before you can continue, you need to register your pokémons and
             book them on the league. This web application will help you keep
-            track of your pokemons and the leagues your pokemons will
+            track of your pokémons and the leagues your pokémons will
             participate in.
             <br />
             <br />
             For every league, you have to fill in the required slots, each slot
-            can have 1 pokemon or a pair of pokemons. A pokemon can enter
+            can have 1 pokémon or a pair of pokémons. A pokémon can enter
             multiple leagues.
           </h3>
         </div>
