@@ -2,11 +2,43 @@ import { useForm } from 'react-hook-form';
 import '../stylesheets/pokemon.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
+import { nanoid } from 'nanoid';
 
 function Pokemon() {
   const { register, handleSubmit } = useForm();
   const apiURL = 'http://localhost:5000/api/createpokemon';
   const navigate = useNavigate();
+
+  const typeArr = [
+    'Normal',
+    'Fire',
+    'Water',
+    'Grass',
+    'Electric',
+    'Ice',
+    'Fighting',
+    'Poison',
+    'Ground',
+    'Flying',
+    'Psychic',
+    'Bug',
+    'Rock',
+    'Ghost',
+    'Dark',
+    'Dragon',
+    'Steel',
+    'Fairy',
+  ];
+
+  const computeTotal = () => {
+    const stats = document.querySelectorAll('.stats');
+    const totalArr = [];
+    Array.from(stats).forEach((el) => {
+      totalArr.push(parseInt(el.value, 10));
+    });
+    const total = totalArr.reduce((a, b) => a + b);
+    document.querySelector('#total').value = total;
+  };
 
   return (
     <>
@@ -28,7 +60,6 @@ function Pokemon() {
           })}
           className="form-container"
         >
-          {/* <h2>Pokemon Details</h2> */}
           <label htmlFor="name">
             Pokemon Name:
             <input
@@ -39,19 +70,24 @@ function Pokemon() {
           </label>
           <label htmlFor="type">
             Pokemon Type:
-            <input
-              {...register('type', { required: true })}
-              placeholder="Type"
-              id="type"
-            />
+            <select {...register('type', { required: true })} id="type">
+              <option value="Null">---</option>
+              {typeArr.map((type) => (
+                <option value={type} key={nanoid()}>
+                  {type}
+                </option>
+              ))}
+              ;
+            </select>
           </label>
-          {/* <h2>Pokemon Statistics</h2> */}
           <label htmlFor="attack">
             Attack Points:
             <input
               {...register('attack', { required: true })}
               placeholder="Attack"
               id="attack"
+              onKeyUp={() => computeTotal()}
+              className="stats"
             />
           </label>
           <label htmlFor="defense">
@@ -60,6 +96,8 @@ function Pokemon() {
               {...register('defense', { required: true })}
               placeholder="Defense"
               id="defense"
+              onKeyUp={() => computeTotal()}
+              className="stats"
             />
           </label>
           <label htmlFor="speed">
@@ -68,12 +106,21 @@ function Pokemon() {
               {...register('speed', { required: true })}
               placeholder="Speed"
               id="speed"
+              onKeyUp={() => computeTotal()}
+              className="stats"
             />
           </label>
-          <button type="submit">
-            Submit
-          </button>
-          <button type="button" id="reset" onClick={() => window.location.reload()}>
+          <label htmlFor="stats">
+            Total Points:
+            <input placeholder="calculating ..." id="total" readOnly disabled />
+          </label>
+
+          <button type="submit">Submit</button>
+          <button
+            type="button"
+            id="reset"
+            onClick={() => window.location.reload()}
+          >
             Reset
           </button>
         </form>

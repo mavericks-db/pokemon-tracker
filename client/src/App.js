@@ -8,6 +8,7 @@ import AllLeagues from './components/AllLeagues';
 import League from './components/League';
 import LeagueCard from './components/LeagueCard';
 import Welcome from './components/Welcome';
+import Intro from './components/Intro';
 
 function App() {
   return (
@@ -16,12 +17,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Welcome />} />
           <Route path="/home" element={<Home />}>
+            <Route index element={<Intro />} />
             <Route path="/home/register_pokemon" element={<Pokemon />} />
             <Route path="/home/all_pokemons" element={<AllPokemons />} />
             <Route path="/home/pokemon/details/:id" element={<PokemonCard />} />
             <Route path="/home/book_league" element={<League />} />
             <Route path="/home/all_leagues" element={<AllLeagues />} />
-            <Route path="/home/league/details/:leagueid" element={<LeagueCard />} />
+            <Route
+              path="/home/league/details/:leagueid"
+              element={<LeagueCard />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
