@@ -331,7 +331,7 @@ function LeagueCard() {
             </div>
             <h4>
               Current Total Stats: &emsp;
-              <span id="currenttotal"> </span>
+              <span id="currenttotal">&nbsp;0</span>
             </h4>
           </div>
           <h2 id="error_msg"> </h2>
