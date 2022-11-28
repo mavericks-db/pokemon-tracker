@@ -21,7 +21,7 @@ function PokemonCard() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.charAt(0).toLowerCase() + name.slice(1)}`);
       const data = await response.json();
       setImg(data.sprites.other['official-artwork'].front_default);
       setImg2(data.sprites.versions['generation-v']['black-white'].animated.front_default);

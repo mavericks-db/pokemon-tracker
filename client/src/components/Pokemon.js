@@ -4,32 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
 import { nanoid } from 'nanoid';
 import PokemonTypes from '../assets/images/PokemonTypes.webp';
+import Names from './Names';
+import Types from './Types';
 
 function Pokemon() {
   const { register, handleSubmit } = useForm();
   const apiURL = 'http://localhost:5000/api/createpokemon';
   const navigate = useNavigate();
-
-  const typeArr = [
-    'Normal',
-    'Fire',
-    'Water',
-    'Grass',
-    'Electric',
-    'Ice',
-    'Fighting',
-    'Poison',
-    'Ground',
-    'Flying',
-    'Psychic',
-    'Bug',
-    'Rock',
-    'Ghost',
-    'Dark',
-    'Dragon',
-    'Steel',
-    'Fairy',
-  ];
+  const pknames = Names;
+  const typeArr = Types;
 
   const computeTotal = () => {
     const stats = document.querySelectorAll('.stats');
@@ -39,6 +22,16 @@ function Pokemon() {
     });
     const total = totalArr.reduce((a, b) => a + b);
     document.querySelector('#total').value = total;
+  };
+
+  const searchHandler = (e) => {
+    const val = e.target.value.charAt(0).toUpperCase()
+      + e.target.value.slice(1);
+    if (val.length > 0) {
+      const sugg = document.querySelector('#suggestions');
+      sugg.textContent = pknames.filter((pkname) => pkname.match(val));
+    }
+    return null;
   };
 
   return (
@@ -63,17 +56,18 @@ function Pokemon() {
             className="form-container"
           >
             <label htmlFor="name">
-              Pokémon Name:
-              &emsp;
+              Pokémon Name: &emsp;
               <input
                 {...register('name', { required: true })}
                 placeholder="Name"
                 id="name"
+                onChange={(e) => searchHandler(e)}
               />
             </label>
+            <p>Search suggestions:</p>
+            <span id="suggestions"> </span>
             <label htmlFor="type">
-              Pokémon Type:
-              &emsp;
+              Pokémon Type: &emsp;
               <select {...register('type', { required: true })} id="type">
                 <option value="???">???</option>
                 {typeArr.map((type) => (
@@ -85,8 +79,7 @@ function Pokemon() {
               </select>
             </label>
             <label htmlFor="attack">
-              Attack Points:
-              &emsp;
+              Attack Points: &emsp;
               <input
                 {...register('attack', { required: true })}
                 placeholder="Attack"
@@ -97,8 +90,7 @@ function Pokemon() {
               />
             </label>
             <label htmlFor="defense">
-              Defense Points:
-              &emsp;
+              Defense Points: &emsp;
               <input
                 {...register('defense', { required: true })}
                 placeholder="Defense"
@@ -109,8 +101,7 @@ function Pokemon() {
               />
             </label>
             <label htmlFor="speed">
-              Speed Points:
-              &emsp;
+              Speed Points: &emsp;
               <input
                 {...register('speed', { required: true })}
                 placeholder="Speed"
@@ -121,8 +112,7 @@ function Pokemon() {
               />
             </label>
             <label htmlFor="stats">
-              Total Points:
-              &emsp;
+              Total Points: &emsp;
               <input
                 placeholder="calculating ..."
                 id="total"

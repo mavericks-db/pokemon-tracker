@@ -67,3 +67,14 @@
   width: 100vw;
   text-align: center;
 }
+
+#suggestions {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 300px;
+  color: #888;
+  height: 2rem;
+  // border: 1px solid #999;
+}
