@@ -15,11 +15,12 @@ const db = mysql.createConnection({
   user: process.env.USER,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
+  port: process.env.DB_PORT
 });
 
 // Create Database
 app.get("/createdb", (req, res) => {
-  let sql = "CREATE DATABASE IF NOT EXISTS pokemon_tracker";
+  let sql = `CREATE DATABASE IF NOT EXISTS ${process.env.DATABASE}`;
   db.query(sql, (err, result) => {
     if (err) {
       throw err;
@@ -170,5 +171,5 @@ app.post("/api/updateleague", (req, res) => {
 });
 
 app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server started in https://127.0.0.1:${process.env.PORT}`);
+  console.log(`Server started in PORT: ${process.env.PORT}`);
 });

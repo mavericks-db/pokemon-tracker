@@ -16,9 +16,9 @@ function LeagueCard() {
     maxstats,
     jsonPokemon,
   } = ulocation.state;
-  const apiURL = 'http://localhost:5000/api/my_pokemons';
-  const saveURL = 'http://localhost:5000/api/updateleague';
-  const statsURL = 'http://localhost:5000/api/selectpokemon';
+  const apiURL = `${process.env.API_BASE_URL}api/my_pokemons`;
+  const saveURL = `${process.env.API_BASE_URL}api/updateleague`;
+  const statsURL = `${process.env.API_BASE_URL}api/selectpokemon`;
   const availslots = new Array(slots).fill('');
   const [arr, setArr] = useState();
   let checkSelection = [];

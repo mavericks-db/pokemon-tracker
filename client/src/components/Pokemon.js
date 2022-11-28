@@ -9,7 +9,7 @@ import Types from './Types';
 
 function Pokemon() {
   const { register, handleSubmit } = useForm();
-  const apiURL = 'http://localhost:5000/api/createpokemon';
+  const apiURL = `${process.env.API_BASE_URL}api/createpokemon`;
   const navigate = useNavigate();
   const pknames = Names;
   const typeArr = Types;
