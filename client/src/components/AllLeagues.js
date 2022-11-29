@@ -6,18 +6,22 @@ import { FaHome } from 'react-icons/fa';
 
 function AllLeagues() {
   const [arr, setArr] = useState([]);
-  const apiURL = `${process.env.API_BASE_URL}api/my_leagues`;
-  const delURL = `${process.env.API_BASE_URL}api/deleteleague`;
+  const apiURL = `${process.env.REACT_APP_API_BASE_URL}api/my_leagues`;
+  const delURL = `${process.env.REACT_APP_API_BASE_URL}api/deleteleague`;
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(apiURL);
+      const response = await fetch(apiURL, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       const data = await response.json();
       setArr(data);
     }
     fetchData();
-  }, []);
+  }, [apiURL]);
 
   const removeLeague = async (data) => {
     await fetch(delURL, {

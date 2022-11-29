@@ -16,9 +16,9 @@ function LeagueCard() {
     maxstats,
     jsonPokemon,
   } = ulocation.state;
-  const apiURL = `${process.env.API_BASE_URL}api/my_pokemons`;
-  const saveURL = `${process.env.API_BASE_URL}api/updateleague`;
-  const statsURL = `${process.env.API_BASE_URL}api/selectpokemon`;
+  const apiURL = `${process.env.REACT_APP_API_BASE_URL}api/my_pokemons`;
+  const saveURL = `${process.env.REACT_APP_API_BASE_URL}api/updateleague`;
+  const statsURL = `${process.env.REACT_APP_API_BASE_URL}api/selectpokemon`;
   const availslots = new Array(slots).fill('');
   const [arr, setArr] = useState();
   let checkSelection = [];
@@ -31,7 +31,7 @@ function LeagueCard() {
       setArr(data);
     }
     fetchData();
-  }, []);
+  }, [apiURL]);
 
   const clickHandler = (num) => {
     const btn = document.querySelector(`#confirmBtn${num}`);

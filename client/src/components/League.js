@@ -8,7 +8,7 @@ import { BsInfoCircle } from 'react-icons/bs';
 
 function League() {
   const { register, handleSubmit } = useForm();
-  const apiURL = `${process.env.API_BASE_URL}api/bookleague`;
+  const apiURL = `${process.env.REACT_APP_API_BASE_URL}api/bookleague`;
   const navigate = useNavigate();
 
   const pokeleagues = [{
