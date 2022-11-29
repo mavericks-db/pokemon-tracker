@@ -1,0 +1,670 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Pokemon League Tracker - OpenAPI 3.0",
+    "description": "This is the Pokemon League Tracker Server based on the OpenAPI 3.0 specification.\n\nSome useful links:\n- [Source Code](https://github.com/mavericks-db/pokemon-tracker)\n- [Live Demo](https://pokemon-tracker-client.up.railway.app/)",
+    "contact": {
+      "email": "balitaanmvericks@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Check out my GitHub profile",
+    "url": "https://github.com/mavericks-db"
+  },
+  "servers": [
+    {
+      "url": "https://pokemon-tracker-server.up.railway.app/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "pokemon",
+      "description": "Access to registered pokemons"
+    },
+    {
+      "name": "league",
+      "description": "Access to booked leagues"
+    }
+  ],
+  "paths": {
+    "/api/my_pokemons": {
+      "get": {
+        "tags": ["pokemon"],
+        "summary": "List registered pokemons",
+        "description": "Returns list of registered pokemons",
+        "operationId": "my_pokemons",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pokemon"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/selectpokemon": {
+      "post": {
+        "tags": ["pokemon"],
+        "summary": "Display stats of a pokemon",
+        "description": "Returns display of pokemon stats",
+        "operationId": "selectpokemon",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "name of pokemon selected",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": ""
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "pokemon": {
+                    "type": "string",
+                    "format": "",
+                    "example": "pikachu"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stats"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/createpokemon": {
+      "post": {
+        "tags": ["pokemon"],
+        "summary": "Register a pokemon",
+        "description": "Insert a pokemon in the table",
+        "operationId": "createpokemon",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "Name of pokemon",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": ""
+            }
+          },
+          {
+            "name": "type",
+            "in": "path",
+            "description": "Type of pokemon",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": ""
+            }
+          },
+          {
+            "name": "attack",
+            "in": "path",
+            "description": "Attack points of pokemon",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "defense",
+            "in": "path",
+            "description": "Defense points of pokemon",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "speed",
+            "in": "path",
+            "description": "Speed points of pokemon",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "format": "",
+                    "example": "golem"
+                  },
+                  "type": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "rock"
+                  },
+                  "attack": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 10
+                  },
+                  "defense": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 10
+                  },
+                  "speed": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 10
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageInsertPokemon"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/removepokemon": {
+      "post": {
+        "tags": ["pokemon"],
+        "summary": "Remove a pokemon",
+        "description": "Delete a pokemon from the table",
+        "operationId": "removepokemon",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of pokemon from the database",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageDeletePokemon"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/my_leagues": {
+      "get": {
+        "tags": ["league"],
+        "summary": "List booked leagues",
+        "description": "Returns list of booked league",
+        "operationId": "my_leagues",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/League"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookleague": {
+      "post": {
+        "tags": ["league"],
+        "summary": "Book a league",
+        "description": "Insert a league in the table",
+        "operationId": "bookleague",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "description": "Title of league",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": ""
+            }
+          },
+          {
+            "name": "location",
+            "in": "path",
+            "description": "Location of league",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": ""
+            }
+          },
+          {
+            "name": "terrain",
+            "in": "path",
+            "description": "Terrain of league",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": ""
+            }
+          },
+          {
+            "name": "date",
+            "in": "path",
+            "description": "Date of league",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": ""
+            }
+          },
+          {
+            "name": "slots",
+            "in": "path",
+            "description": "No. of required slots",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "maxstats",
+            "in": "path",
+            "description": "Maximum limit of total stats",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "format": "",
+                    "example": "Indigo League"
+                  },
+                  "location": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "Johto"
+                  },
+                  "terrain": {
+                    "type": "string",
+                    "format": "",
+                    "example": "mountain"
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "",
+                    "example": "2022-12-01"
+                  },
+                  "slots": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 2
+                  },
+                  "maxstats": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 150
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageInsertLeague"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/deleteleague": {
+      "post": {
+        "tags": ["league"],
+        "summary": "Remove a league",
+        "description": "Delete a league from the table",
+        "operationId": "deleteleague",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of pokemon league from the database",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageDeleteLeague"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/updateleague": {
+      "post": {
+        "tags": ["league"],
+        "summary": "Update a league",
+        "description": "Insert pokemons in the slots",
+        "operationId": "updateleague",
+        "parameters": [
+          {
+            "name": "selectedPokemons",
+            "in": "path",
+            "description": "Selected pokemons in the slots",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "format": ""
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of pokemon league to be updated",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "selectedPokemons": {
+                    "type": "array",
+                    "format": "",
+                    "example": "[[\"Pikachu\", \"Charizard\"], [\"Mew\", \"solo\"]]"
+                  },
+                  "id": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": "1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageUpdateLeague"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Pokemon": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "format": "",
+            "example": "pikachu"
+          },
+          "type": {
+            "type": "string",
+            "format": "",
+            "example": "Electric"
+          },
+          "attack": {
+            "type": "integer",
+            "format": "int64",
+            "example": "10"
+          },
+          "defense": {
+            "type": "integer",
+            "format": "int64",
+            "example": "12"
+          },
+          "speed": {
+            "type": "integer",
+            "format": "int64",
+            "example": "14"
+          }
+        }
+      },
+      "Stats": {
+        "type": "object",
+        "properties": {
+          "attack": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "defense": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "speed": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          }
+        }
+      },
+      "League": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": "1"
+          },
+          "title": {
+            "type": "string",
+            "format": "",
+            "example": "Indigo League"
+          },
+          "location": {
+            "type": "string",
+            "format": "",
+            "example": "Kanto"
+          },
+          "terrain": {
+            "type": "string",
+            "format": "",
+            "example": "mountain"
+          },
+          "date": {
+            "type": "string",
+            "format": "",
+            "example": "2022-11-29T00:00:00.000Z"
+          },
+          "slots": {
+            "type": "integer",
+            "format": "int64",
+            "example": "2"
+          },
+          "maxstats": {
+            "type": "integer",
+            "format": "int64",
+            "example": "150"
+          },
+          "jsonPokemon": {
+            "type": "array",
+            "format": "",
+            "example": "[[\"Pikachu\", \"Charizard\"], [\"Mew\", \"solo\"]]"
+          }
+        }
+      },
+      "MessageInsertPokemon": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "format": "",
+            "example": "1 pokemon recorded"
+          }
+        }
+      },
+      "MessageDeletePokemon": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "format": "",
+            "example": "1 pokemon removed"
+          }
+        }
+      },
+      "MessageInsertLeague": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "format": "",
+            "example": "1 pokemon league booked"
+          }
+        }
+      },
+      "MessageDeleteLeague": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "format": "",
+            "example": "1 pokemon league deleted"
+          }
+        }
+      },
+      "MessageUpdateLeague": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "format": "",
+            "example": "1 pokemon league updated"
+          }
+        }
+      }
+    }
+  }
+}

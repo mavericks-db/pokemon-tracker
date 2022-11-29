@@ -72,7 +72,7 @@ function AllPokemons() {
                 ))
               ) : (
                 <tr>
-                  <td>Loading ... </td>
+                  <td>No registered pokemons to show.</td>
                 </tr>
               )}
             </tbody>

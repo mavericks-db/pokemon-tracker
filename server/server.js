@@ -2,6 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
+const swaggerJsdoc = require("swagger-jsdoc");
 
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
@@ -9,6 +12,7 @@ const bodyParser = require("body-parser");
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const db = mysql.createConnection({
   host: process.env.HOST,
@@ -88,9 +92,9 @@ app.post("/api/createpokemon", (req, res) => {
   let sql =
     "INSERT INTO pokemon (name, type, attack, defense, speed) VALUES (?, ?, ?, ?, ?)";
   db.query(sql, [name, type, attack, defense, speed], (err, result) => {
-    // if (err) {
-    //   throw err;
-    // }
+    if (err) {
+      throw err;
+    }
     console.log(result);
     console.log("1 pokemon recorded");
   });
@@ -131,9 +135,9 @@ app.post("/api/bookleague", (req, res) => {
     sql,
     [title, location, terrain, date, slots, maxstats],
     (err, result) => {
-      // if (err) {
-      //   throw err;
-      // }
+      if (err) {
+        throw err;
+      }
       console.log(result);
       console.log("1 pokemon league booked");
     }
@@ -161,9 +165,9 @@ app.post("/api/updateleague", (req, res) => {
     selectedPokemons
   )}' WHERE id = ?`;
   db.query(sql, id, (err, result) => {
-    // if (err) {
-    //   throw err;
-    // }
+    if (err) {
+      throw err;
+    }
     console.log(result);
     console.log("1 pokemon league updated");
   });
@@ -171,5 +175,5 @@ app.post("/api/updateleague", (req, res) => {
 });
 
 app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server started in PORT: ${process.env.PORT}`);
+  console.log(`Server started in ${process.env.host}:${process.env.PORT}`);
 });
