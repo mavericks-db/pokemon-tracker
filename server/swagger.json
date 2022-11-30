@@ -208,7 +208,7 @@
       }
     },
     "/api/pokemon/removepokemon": {
-      "post": {
+      "delete": {
         "tags": ["pokemon"],
         "summary": "Remove a pokemon",
         "description": "Delete a pokemon from the table",
@@ -402,7 +402,7 @@
       }
     },
     "/api/league/deleteleague": {
-      "post": {
+      "delete": {
         "tags": ["league"],
         "summary": "Remove a league",
         "description": "Delete a league from the table",

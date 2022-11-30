@@ -21,7 +21,7 @@ function AllPokemons() {
 
   const deletePokemon = async (data) => {
     await fetch(delUrl, {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },

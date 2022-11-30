@@ -25,7 +25,7 @@ function AllLeagues() {
 
   const removeLeague = async (data) => {
     await fetch(delURL, {
-      method: 'POST',
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },

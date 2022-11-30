@@ -49,7 +49,7 @@ router.post("/createpokemon", (req, res) => {
   res.send({ message: "1 pokemon recorded" });
 });
 
-router.post("/removepokemon", (req, res) => {
+router.delete("/removepokemon", (req, res) => {
   let { id } = req.body;
   console.log(id);
   let sql = "DELETE FROM pokemon WHERE id = ?";

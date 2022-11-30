@@ -41,7 +41,7 @@ router.post("/bookleague", (req, res) => {
   res.send({ message: "1 pokemon league booked" });
 });
 
-router.post("/deleteleague", (req, res) => {
+router.delete("/deleteleague", (req, res) => {
   let { id } = req.body;
   console.log(id);
   let sql = "DELETE FROM league WHERE id = ?";
