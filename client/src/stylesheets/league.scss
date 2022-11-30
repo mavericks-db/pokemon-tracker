@@ -82,3 +82,16 @@
     margin: 1rem;
   }
 }
+
+@media screen and (max-width: 768px){
+  .form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .notes {
+    width: 90%;
+  }
+}

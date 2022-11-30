@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100vw;
   height: 100vh;
 }
 
@@ -31,7 +32,6 @@
     align-items: center;
   }
 
- 
   input {
     margin: 1rem;
     float: right;
@@ -56,8 +56,8 @@
   max-width: 100px;
 }
 
-.info {
-  width: 50%;
+.info h3 {
+  width: 100%;
 }
 
 .home-pokemon {
@@ -76,5 +76,32 @@
   max-width: 300px;
   color: #888;
   height: 2rem;
-  // border: 1px solid #999;
+}
+
+@media screen and (max-width: 768px) {
+  .pokemon-wrapper {
+    width: 100vw;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  .form-wrapper .form-container {
+    width: 90%;
+  }
+  .pokemon-wrapper .form-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .pokemon-wrapper .form-wrapper img {
+    width: 200px;
+  }
+
+  .info {
+    font-size: 1rem;
+  }
 }

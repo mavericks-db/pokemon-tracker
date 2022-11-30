@@ -23,6 +23,7 @@ button {
   color: white;
   border-radius: 0.25rem;
   width: 100px;
+  cursor: pointer;
 
   &:hover {
     background-color: white;
@@ -33,4 +34,8 @@ button {
     background-color: #999;
     color: white;
   }
+}
+
+a {
+  cursor: pointer;
 }

@@ -37,3 +37,18 @@
   margin: 1rem;
 }
 
+@media screen and (max-width: 768px) {
+  .league-wrapper-card {
+    width: 100vw;
+    margin: 0;
+  }
+  .league-details {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+
+  .slot-details {
+    width: 100vw;
+  }
+}
