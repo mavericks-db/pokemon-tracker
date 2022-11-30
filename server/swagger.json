@@ -28,7 +28,7 @@
     }
   ],
   "paths": {
-    "/api/my_pokemons": {
+    "/api/pokemon/my_pokemons": {
       "get": {
         "tags": ["pokemon"],
         "summary": "List registered pokemons",
@@ -51,7 +51,7 @@
         }
       }
     },
-    "/api/selectpokemon": {
+    "/api/pokemon/selectpokemon": {
       "post": {
         "tags": ["pokemon"],
         "summary": "Display stats of a pokemon",
@@ -99,7 +99,7 @@
         }
       }
     },
-    "/api/createpokemon": {
+    "/api/pokemon/createpokemon": {
       "post": {
         "tags": ["pokemon"],
         "summary": "Register a pokemon",
@@ -207,7 +207,7 @@
         }
       }
     },
-    "/api/removepokemon": {
+    "/api/pokemon/removepokemon": {
       "post": {
         "tags": ["pokemon"],
         "summary": "Remove a pokemon",
@@ -255,7 +255,7 @@
         }
       }
     },
-    "/api/my_leagues": {
+    "/api/league/my_leagues": {
       "get": {
         "tags": ["league"],
         "summary": "List booked leagues",
@@ -278,7 +278,7 @@
         }
       }
     },
-    "/api/bookleague": {
+    "/api/league/bookleague": {
       "post": {
         "tags": ["league"],
         "summary": "Book a league",
@@ -401,7 +401,7 @@
         }
       }
     },
-    "/api/deleteleague": {
+    "/api/league/deleteleague": {
       "post": {
         "tags": ["league"],
         "summary": "Remove a league",
@@ -449,7 +449,7 @@
         }
       }
     },
-    "/api/updateleague": {
+    "/api/league/updateleague": {
       "post": {
         "tags": ["league"],
         "summary": "Update a league",

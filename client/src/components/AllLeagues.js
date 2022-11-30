@@ -6,8 +6,8 @@ import { FaHome } from 'react-icons/fa';
 
 function AllLeagues() {
   const [arr, setArr] = useState([]);
-  const apiURL = `${process.env.REACT_APP_API_BASE_URL}api/my_leagues`;
-  const delURL = `${process.env.REACT_APP_API_BASE_URL}api/deleteleague`;
+  const apiURL = `${process.env.REACT_APP_API_BASE_URL}api/league/my_leagues`;
+  const delURL = `${process.env.REACT_APP_API_BASE_URL}api/league/deleteleague`;
   const navigate = useNavigate();
 
   useEffect(() => {

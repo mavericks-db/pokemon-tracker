@@ -6,8 +6,8 @@ import { FaHome } from 'react-icons/fa';
 
 function AllPokemons() {
   const [arr, setArr] = useState([]);
-  const apiURL = `${process.env.REACT_APP_API_BASE_URL}api/my_pokemons`;
-  const delUrl = `${process.env.REACT_APP_API_BASE_URL}api/removepokemon`;
+  const apiURL = `${process.env.REACT_APP_API_BASE_URL}api/pokemon/my_pokemons`;
+  const delUrl = `${process.env.REACT_APP_API_BASE_URL}api/pokemon/removepokemon`;
   const navigate = useNavigate();
 
   useEffect(() => {

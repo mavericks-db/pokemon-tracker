@@ -1,27 +1,33 @@
-require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const swaggerJsdoc = require("swagger-jsdoc");
-
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+const pokemon = require("./routes/pokemon");
+const league = require("./routes/league");
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-const path = require('path')
-app.use(express.static(path.join(__dirname, 'public')))
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const path = require("path");
+app.use(express.static(path.join(__dirname, "public")));
+
+// Routes
+app.use("/api/pokemon", pokemon);
+app.use("/api/league", league);
 
 const db = mysql.createConnection({
   host: process.env.HOST,
   user: process.env.USER,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
-  port: process.env.DB_PORT
+  port: process.env.DB_PORT,
 });
 
 // Create Database
@@ -62,120 +68,9 @@ db.connect((err) => {
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname,'/public/index.html'));
-});
-
-// Routes for pokemon
-app.get("/api/my_pokemons", (req, res) => {
-  let sql = "SELECT * FROM pokemon";
-  db.query(sql, (err, result) => {
-    if (err) {
-      throw err;
-    }
-    res.send(result);
-  });
-  console.log("Show all pokemons ...");
-});
-
-app.post("/api/selectpokemon", (req, res) => {
-  let { pokemon } = req.body;
-  let sql = "SELECT attack, defense, speed FROM pokemon WHERE name = ?";
-  db.query(sql, pokemon, (err, result) => {
-    if (err) {
-      throw err;
-    }
-    res.send(result);
-  });
-  console.log("Show stats of selected pokemon ...");
-});
-
-app.post("/api/createpokemon", (req, res) => {
-  let { name, type, attack, defense, speed } = req.body;
-  let sql =
-    "INSERT INTO pokemon (name, type, attack, defense, speed) VALUES (?, ?, ?, ?, ?)";
-  db.query(sql, [name, type, attack, defense, speed], (err, result) => {
-    if (err) {
-      throw err;
-    }
-    console.log(result);
-    console.log("1 pokemon recorded");
-  });
-  res.send({ message: "1 pokemon recorded" });
-});
-
-app.post("/api/removepokemon", (req, res) => {
-  let { id } = req.body;
-  console.log(id);
-  let sql = "DELETE FROM pokemon WHERE id = ?";
-  db.query(sql, id, (err, result) => {
-    if (err) {
-      throw err;
-    }
-    console.log(result);
-    console.log("1 pokemon removed");
-  });
-  res.send({ message: "1 pokemon removed" });
-});
-
-// Routes for league
-app.get("/api/my_leagues", (req, res) => {
-  let sql = "SELECT * FROM league";
-  db.query(sql, (err, result) => {
-    if (err) {
-      throw err;
-    }
-    res.send(result);
-  });
-  console.log("Show all pokemon leagues ...");
-});
-
-app.post("/api/bookleague", (req, res) => {
-  let { title, location, terrain, date, slots, maxstats } = req.body;
-  let sql =
-    "INSERT INTO league (title, location, terrain, date, slots, maxstats) VALUES (?, ?, ?, ?, ? , ?)";
-  db.query(
-    sql,
-    [title, location, terrain, date, slots, maxstats],
-    (err, result) => {
-      if (err) {
-        throw err;
-      }
-      console.log(result);
-      console.log("1 pokemon league booked");
-    }
-  );
-  res.send({ message: "1 pokemon league booked" });
-});
-
-app.post("/api/deleteleague", (req, res) => {
-  let { id } = req.body;
-  console.log(id);
-  let sql = "DELETE FROM league WHERE id = ?";
-  db.query(sql, id, (err, result) => {
-    if (err) {
-      throw err;
-    }
-    console.log(result);
-    console.log("1 pokemon league deleted");
-  });
-  res.send({ message: "1 pokemon league deleted" });
-});
-
-app.post("/api/updateleague", (req, res) => {
-  let { selectedPokemons, id } = req.body;
-  let sql = `UPDATE league set jsonPokemon = '${JSON.stringify(
-    selectedPokemons
-  )}' WHERE id = ?`;
-  db.query(sql, id, (err, result) => {
-    if (err) {
-      throw err;
-    }
-    console.log(result);
-    console.log("1 pokemon league updated");
-  });
-  res.send({ message: "1 pokemon league updated" });
+  res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 
 app.listen(process.env.PORT || 5000, () => {
-  console.log(`Server started in ${process.env.host}:${process.env.PORT}`);
+  console.log(`Server started in http://${process.env.HOST}:${process.env.PORT}`);
 });

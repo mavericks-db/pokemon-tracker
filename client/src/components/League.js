@@ -5,49 +5,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaHome } from 'react-icons/fa';
 import { nanoid } from 'nanoid';
 import { BsInfoCircle } from 'react-icons/bs';
+import PokeLeagues from './PokeLeagues';
 
 function League() {
   const { register, handleSubmit } = useForm();
-  const apiURL = `${process.env.REACT_APP_API_BASE_URL}api/bookleague`;
+  const apiURL = `${process.env.REACT_APP_API_BASE_URL}api/league/bookleague`;
   const navigate = useNavigate();
-
-  const pokeleagues = [{
-    title: 'Indigo League',
-    location: 'Kanto',
-  },
-  {
-    title: 'Indigo League',
-    location: 'Johto',
-  },
-  {
-    title: 'Orange League',
-    location: 'Orange Archipelago',
-  },
-  {
-    title: 'Hoenn League',
-    location: 'Hoenn',
-  },
-  {
-    title: 'Sinnoh League',
-    location: 'Sinnoh',
-  },
-  {
-    title: 'Unova League',
-    location: 'Unova',
-  },
-  {
-    title: 'Kalos League',
-    location: 'Kalos',
-  },
-  {
-    title: 'Alola League',
-    location: 'Alola',
-  },
-  {
-    title: 'Galar League',
-    location: 'Galar',
-  },
-  ];
+  const pokeleaguesArr = PokeLeagues;
 
   return (
     <>
@@ -140,7 +104,7 @@ function League() {
               There are nine (9) known regional Leagues:
             </h4>
             <ul>
-              {pokeleagues.map((ll) => (
+              {pokeleaguesArr.map((ll) => (
                 <React.Fragment key={nanoid()}>
                   <li>
                     {ll.title}
