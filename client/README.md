@@ -1,11 +1,12 @@
 ![](https://img.shields.io/badge/Node.JS-%23339933)
 ![](https://img.shields.io/badge/React.JS-%2361DAFB)
+![](https://img.shields.io/badge/Railway-%230B0D0E)
 
 # CLIENT - POKEMON LEAGUE TRACKER
 
 ![web-screenshot](https://user-images.githubusercontent.com/98527559/204548426-5a8659b2-dc9d-4e48-bc38-432a3e8b95fb.png)
 
-## ReactJS
+## React.JS
 
 > This repo is the frontend web application for the Pokemon League Tracker. It was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

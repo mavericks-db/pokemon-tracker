@@ -13,6 +13,8 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const path = require('path')
+app.use(express.static(path.join(__dirname, 'public')))
 
 const db = mysql.createConnection({
   host: process.env.HOST,
@@ -60,7 +62,7 @@ db.connect((err) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Pokemon and League tables are created ...");
+  res.sendFile(path.join(__dirname,'/public/index.html'));
 });
 
 // Routes for pokemon
